@@ -23,6 +23,11 @@ Official discovery references, inspected 2026-10-01:
 [Cursor](https://cursor.com/docs/skills), [OpenCode](https://opencode.ai/docs/skills/).
 These describe the directory format; they do not certify this package's runtime quality.
 
+For desktop Codex, open the actual target folder containing `.agents/skills` as the coding workspace.
+Discovery scans from the working directory upward; a child project named only in a prompt is insufficient.
+A real [desktop full task](acceptance/DESKTOP_BOOKMARKS.md) completed through explicit skill-file invocation
+when that project-context mismatch left the skill absent from the catalog.
+
 ## Start with research-only
 
 Open your target coding project in the agent. Ask:

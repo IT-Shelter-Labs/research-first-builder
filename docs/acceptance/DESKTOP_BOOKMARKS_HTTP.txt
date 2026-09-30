@@ -1,0 +1,60 @@
+Tested snapshot: sha256:ce580d3e4f9b59d91423ca02eab0e32c86e66b3374c0788025bb5a630ab23b0b
+Python: 3.11.0 (main, Oct 24 2022, 18:26:48) [MSC v.1933 64 bit (AMD64)]
+Start: 2026-09-30T23:39:33.799520+00:00
+PASS empty collection from actual server
+PASS no-build HTML start
+PASS CSP delivered
+PASS static asset /app.js
+PASS static asset /style.css
+PASS create with optional tags
+PASS trim fields and deduplicate tags preserving spelling
+PASS create without tags
+PASS search title/URL/tag Unicode casefold: ПОЛЕЗНЫЙ
+PASS search title/URL/tag Unicode casefold: СПРАВОЧ
+PASS search title/URL/tag Unicode casefold: reference?x
+PASS search title/URL/tag Unicode casefold: ЧИТАТЬ ПОЗЖЕ
+PASS search title/URL/tag Unicode casefold: python
+PASS literal percent and underscore search
+PASS empty search results
+PASS search injection text is literal
+PASS duplicate URL rejected
+PASS invalid input case 1: url
+PASS invalid input case 2: url
+PASS invalid input case 3: url
+PASS invalid input case 4: url
+PASS invalid input case 5: url
+PASS invalid input case 6: title
+PASS invalid input case 7: title
+PASS invalid input case 8: title
+PASS invalid input case 9: tags
+PASS invalid input case 10: tags
+PASS invalid input case 11: tags
+PASS unpaired Unicode surrogate rejected
+PASS malformed JSON rejected
+PASS empty array through helper serializes to empty object; required fields enforced
+PASS non-object JSON rejected
+PASS oversize body rejected
+PASS wrong content type rejected
+PASS cross-origin mutation rejected
+PASS missing custom header rejected
+PASS foreign host rejected
+PASS private path inaccessible /data/bookmarks.sqlite3
+PASS private path inaccessible /../app.py
+PASS private path inaccessible /docs/research-first/bookmarks/evidence.json
+PASS oversize query rejected
+PASS edit duplicate conflict rejected
+PASS invalid edit rejected without data loss
+PASS failed mutations preserve row count
+PASS edit persisted fields
+PASS exact records survive actual process termination/restart
+PASS updated tags searchable after restart
+PASS old title removed from search after edit
+PASS delete existing bookmark
+PASS delete missing bookmark yields clear error
+PASS edit missing bookmark yields clear error
+PASS deletion survives restart
+PASS database lock returns understandable storage failure
+PASS failed storage write did not create a record
+PASS SQLite integrity check
+PASS: 55 assertions. Runtime/log: tests\runtime\a5ef7588ed28421d83d4df6d90906adf
+End: 2026-09-30T23:39:40.285639+00:00

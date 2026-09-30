@@ -8,8 +8,8 @@ Research First Builder is one portable agent skill by [IT Shelter](https://githu
 It turns relevant software references into scoped **ADOPT / REJECT / DEFER** decisions, a minimal plan,
 and verification linked back to those decisions. An offline helper checks the artifact contract.
 
-**0.1.0 release candidate:** working local package and examples; native end-to-end host acceptance
-and comparative evaluation remain incomplete. See [actual test status](docs/COMPATIBILITY.md).
+**0.1.0 release candidate:** working local package, examples and a [desktop full-workflow test](docs/acceptance/DESKTOP_BOOKMARKS.md).
+Native selector acceptance and comparative evaluation remain incomplete. See [actual test status](docs/COMPATIBILITY.md).
 [Русский](README_RU.md) · [Quick start](docs/QUICKSTART.md) · [Examples](examples/README.md)
 
 ![A walkthrough of actual recorded decisions and checks](media/demo.gif)

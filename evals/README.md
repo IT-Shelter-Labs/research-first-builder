@@ -1,6 +1,7 @@
 # Evaluation: observed behavior and unfinished comparison
 
-This candidate has **one independent research-only forward test**, three maintainer-authored full examples,
+This candidate has **one independent research-only forward test**, one actual desktop full-workflow task,
+three maintainer-authored full examples,
 offline regression tests, and local installation checks. It does not have a completed paired benchmark,
 external pilot or measured advantage over a strong research prompt.
 
@@ -9,6 +10,7 @@ external pilot or measured advantage over a strong research prompt.
 | Actual exercise | Outcome | What it establishes |
 | --- | --- | --- |
 | Independent agent, local literal JSONL research-only task | Primary sources retrieved; research/decisions/plan and source audit; actual render/prebuild PASS; postbuild correctly rejected; no application written | One scoped instruction workflow and its UX findings |
+| User-triggered desktop Bookmarks task, explicit skill-file invocation | Primary research, design/build, actual browser checks; 55 HTTP assertions independently repeated; current hashes/postbuild match | One full workflow, not native selector acceptance or comparative advantage; [report](../docs/acceptance/DESKTOP_BOOKMARKS.md) |
 | Team-chat, inbox, CLI examples | Actual original behavior tests and postbuild checks pass | Contract/build walkthroughs work locally; not autonomous comparative results |
 | Native Codex discovery attempt | Skill loaded; tool policy blocked reads after HTTPS fallback | Native discovery, honest capability failure; not workflow completion |
 | Native Claude attempt | Authentication HTTP 403 | Environment failure; no reasoning-quality evidence |

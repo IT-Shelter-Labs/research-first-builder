@@ -12,15 +12,15 @@ for commit authorship; repository-specific ID-based noreply identity preserves t
 | M2 Research-only path | Independent actual primary-source run and handoff, no app edits |
 | M3 Offline helper | Meaningful contract/render/packaging regression suite passes locally |
 | M4 Evidence/failures | Five classes, scoped locators, license status, audit boundary, partial-source failure exercised |
-| M5 Build/verify/resume | Three actual builds; stale plan/source/snapshot and failed/not-run receipts covered by regression cases |
-| M6 Primary native acceptance | Incomplete: Claude auth and nested Codex policy blocked full runs; UI acceptance pending |
+| M5 Build/verify/resume | Three educational builds plus actual desktop Bookmarks task; 55 HTTP assertions independently repeated; stale plan/source/snapshot and failed/not-run receipts covered by regression cases |
+| M6 Primary native acceptance | Desktop full workflow passed by explicit skill-file invocation; native selector discovery pending in correct project context. Claude auth and nested CLI policy blocked prior full runs |
 | M7 Examples/demo | Three original genuine-source builds plus independent handoff; reproducible edited artifact animation |
 | M8 Comparison/pilot | Method/cases/rubric prepared; paired runs and consenting external pilot not executed |
 | M9 Public package | English/Russian README, MIT, contribution/security docs, offline CI configuration and clean archive; hosted CI/publication pending |
 
 ## Concrete launch checks remaining
 
-- Complete native quick research-only and bounded full acceptance in normal authenticated primary hosts; retain actual outputs.
+- Complete native discovery in the actual desktop target project and native acceptance in other primary hosts. [Desktop full-workflow report](acceptance/DESKTOP_BOOKMARKS.md) preserves what already passed.
 - Execute hosted Windows/Linux CI after repository setup; configured YAML is not a green run.
 - Declare evaluation budget and run a comparison/pilot before making measured benefit claims.
 - Author profile was selected by the user. Review final file/history privacy and organization settings before the public push.

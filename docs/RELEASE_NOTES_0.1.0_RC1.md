@@ -9,6 +9,9 @@ human research/plan/verification reports, and an offline Python 3.11+ init/rende
 
 Included: three original educational builds from inspected primary sources, an independent research-only handoff,
 meaningful negative tests, local installation checks, English/Russian docs and an edited walkthrough of actual artifacts.
+A real desktop Bookmarks task also completed by explicit skill-file invocation. Its current implementation hashes
+and postbuild were independently reviewed; all 55 HTTP assertions passed again in an isolated copy.
+[Acceptance details](acceptance/DESKTOP_BOOKMARKS.md) distinguish recorded browser checks from independent repetition.
 
 Local validation: 54 tests passed; one Windows symlink-creation case skipped by host permissions. Format/lint and
 clean-archive checks passed. The helper needs no pip dependencies, backend, RFB account or MCP server.

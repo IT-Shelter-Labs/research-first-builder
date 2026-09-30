@@ -8,7 +8,8 @@ Repository-specific Git identity uses the ID-based GitHub noreply address, not a
 ## Readiness
 
 The implementation, local tests, real examples, documentation and demo are ready for a **0.1.0-rc1 preview**.
-Complete the normal desktop acceptance task and inspect hosted CI before promoting it as a tested stable release.
+The [desktop full task](acceptance/DESKTOP_BOOKMARKS.md) passed via explicit skill-file invocation.
+Complete native selector discovery in the actual target project and inspect hosted CI before promoting a stable release.
 Native Claude acceptance and a comparative benchmark remain open; neither receives a badge or unsupported claim.
 [Detailed gates](RELEASE_STATUS.md).
 
@@ -58,8 +59,8 @@ npx skills@1.7.0 add IT-Shelter-Labs/research-first-builder --skill research-fir
 
 ## Materials needed
 
-The organization handle and author profile have already been supplied. A successful desktop test should provide
-the generated research/plan/verification artifacts and HOST_TEST.md, or the actual failure output. A repository URL
+The organization handle, author profile and successful desktop task artifacts have already been supplied and reviewed.
+A repository URL
 and normal authorized GitHub access are needed for publishing; a profile URL alone does not grant write access.
 
 Additional photographs, screenshots or artwork are not prerequisites. The repository contains an original demo GIF.
