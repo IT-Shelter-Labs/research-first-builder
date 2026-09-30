@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "run_id": "jsonl-filter-forward-test",
+  "stage": "PREBUILD_CHECKED",
+  "prebuild_receipt": {
+    "fingerprint": "135fbfe19ed78258de370753d2315107e2aa1a999cdf612ff30f3d2732716e79",
+    "checked_at": "2026-09-30T20:26:48+00:00"
+  },
+  "postbuild_receipt": null,
+  "rendered_at": "2026-09-30T20:26:48+00:00"
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "run_id": "team-chat",
+  "stage": "COMPLETE",
+  "prebuild_receipt": {
+    "fingerprint": "d436c6681a80e9067256dfa0438c43a6e946ca884951f62518067cb71bd2af43",
+    "checked_at": "2026-09-30T20:14:57+00:00"
+  },
+  "postbuild_receipt": {
+    "fingerprint": "d436c6681a80e9067256dfa0438c43a6e946ca884951f62518067cb71bd2af43",
+    "checked_at": "2026-09-30T20:46:22+00:00",
+    "snapshot": "files:sha256:2820c2116ea0cd1a60f14440dd8b5b55dabc30bc3692d72c7131a241a964ef32",
+    "evidence_hash": "013f23d9aa76d901ef952c7232931400af37432462ba73bdd3fcd35d4458f9f5",
+    "check_outputs": {
+      "checks/CHECK-001.txt": "380ddc483c475fd1b2390833ca3fe9865472948eb664e23a46f656d4dae915c9",
+      "checks/CHECK-002.txt": "2b8a024f986476c2a6a9b3d206f6f4bdd5d2cfbbb9c7b59b1d4da3dcf5d0ae30",
+      "checks/CHECK-003.txt": "e8d90618926d032ba08dd5bc562d6a0b740835b2267a690d0863584a3236721a"
+    },
+    "verification_hash": "bf05e41799925f8dcdb9bef2a583c14bfe39543f6837c28c08759f2219ce9151"
+  },
+  "rendered_at": "2026-09-30T20:46:22+00:00"
+}

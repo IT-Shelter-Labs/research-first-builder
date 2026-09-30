@@ -1,0 +1,449 @@
+{
+  "schema_version": 1,
+  "run_id": "webhook-inbox",
+  "intent": "full",
+  "scope": {
+    "goal": "Build a durable generic signed webhook-inbox core",
+    "constraints": [
+      "Python stdlib",
+      "one local writer",
+      "1 MiB payload cap",
+      "300-second signature window"
+    ],
+    "non_goals": [
+      "HTTP server",
+      "Stripe/Svix wire compatibility",
+      "job execution",
+      "outgoing retries"
+    ]
+  },
+  "coverage": {
+    "depth": "default",
+    "reference_exception": "",
+    "rejection_note": "",
+    "limitations": [
+      "Maintainer-authored walkthrough, not a controlled autonomous-host benchmark.",
+      "Primary sources inspected; reference projects not installed or executed."
+    ]
+  },
+  "questions": [
+    {
+      "question": "What is the smallest mechanism that meets this bounded task?",
+      "critical": true,
+      "status": "ANSWERED",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-003",
+        "EV-004",
+        "EV-005",
+        "EV-006"
+      ],
+      "resolution": "One original Inbox module, a UNIQUE event-ID table, raw bytes and digest, a local HMAC verifier and a bounded JSON validator. Commit precedes the returned stored receipt; no commands or jobs are executed."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "text": "Persist each event ID once and retain it after reopening.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "TASK.md in this example",
+      "acceptance": "Identical duplicate is no-op; conflicting body rejected; reopen retains payload.",
+      "critical": true
+    },
+    {
+      "id": "REQ-002",
+      "text": "Verify local generic HMAC messages before storage.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "TASK.md in this example",
+      "acceptance": "Tampered/stale signatures and invalid payloads never create rows.",
+      "critical": true
+    }
+  ],
+  "references": [
+    {
+      "id": "REF-001",
+      "canonical_url": "https://github.com/adnanh/webhook",
+      "relevance": "Small incoming-hook boundary",
+      "mismatch": "Executes configured commands",
+      "selection_rationale": "Inspected a concrete mechanism relevant to the task; no popularity score.",
+      "activity": {
+        "description": "Last repository push 2026-09-04T18:02:57Z; metadata read 2026-09-30.",
+        "source": "https://api.github.com/repos/adnanh/webhook",
+        "checked_at": "2026-09-30T17:27:44.4808011Z"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "MIT",
+        "locator": "https://github.com/adnanh/webhook/blob/2bbdeb9f90b5f98c7b7b8976881efd6da9f69571/LICENSE",
+        "scope": "Root license and relevant README/source scope; no source/text copied.",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    },
+    {
+      "id": "REF-002",
+      "canonical_url": "https://github.com/svix/svix-webhooks",
+      "relevance": "Webhook storage/queue comparison",
+      "mismatch": "Primarily delivery service with broader deployment",
+      "selection_rationale": "Inspected a concrete mechanism relevant to the task; no popularity score.",
+      "activity": {
+        "description": "Last repository push 2026-09-30T16:46:25Z; metadata read 2026-09-30.",
+        "source": "https://api.github.com/repos/svix/svix-webhooks",
+        "checked_at": "2026-09-30T17:27:53.0513844Z"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "MIT",
+        "locator": "https://github.com/svix/svix-webhooks/blob/dd4d50efb234b4a9c313f6c31cdb84ba150c3bd2/LICENSE",
+        "scope": "Root license and relevant README/source scope; no source/text copied.",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    },
+    {
+      "id": "REF-003",
+      "canonical_url": "https://docs.stripe.com/webhooks",
+      "relevance": "Duplicate/replay and raw-body verification mechanisms",
+      "mismatch": "Primary mechanism documentation, not a like-for-like complete application.",
+      "selection_rationale": "Answers a specific decision question.",
+      "activity": {
+        "description": "Primary documentation inspected; publication date not supplied.",
+        "source": "https://docs.stripe.com/webhooks",
+        "checked_at": "2026-09-30T20:14:57+00:00"
+      },
+      "license_record": {
+        "status": "MISSING",
+        "spdx": "",
+        "locator": "",
+        "scope": "Documentation redistribution rights not inspected; pattern-only study.",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    },
+    {
+      "id": "REF-004",
+      "canonical_url": "https://www.sqlite.org/lang_conflict.html",
+      "relevance": "Local uniqueness conflict behavior",
+      "mismatch": "Primary mechanism documentation, not a like-for-like complete application.",
+      "selection_rationale": "Answers a specific decision question.",
+      "activity": {
+        "description": "Primary documentation inspected; publication date not supplied.",
+        "source": "https://www.sqlite.org/lang_conflict.html",
+        "checked_at": "2026-09-30T20:14:57+00:00"
+      },
+      "license_record": {
+        "status": "MISSING",
+        "spdx": "",
+        "locator": "",
+        "scope": "Documentation redistribution rights not inspected; pattern-only study.",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-001",
+      "reference_id": "REF-001",
+      "url": "https://github.com/adnanh/webhook/blob/2bbdeb9f90b5f98c7b7b8976881efd6da9f69571/docs/Hook-Definition.md",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "2bbdeb9f90b5f98c7b7b8976881efd6da9f69571",
+        "path": "docs/Hook-Definition.md",
+        "location": "id/execute-command; include-command-output-in-response",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-001.md",
+      "limitations": []
+    },
+    {
+      "id": "SRC-002",
+      "reference_id": "REF-002",
+      "url": "https://github.com/svix/svix-webhooks/blob/dd4d50efb234b4a9c313f6c31cdb84ba150c3bd2/README.md",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "dd4d50efb234b4a9c313f6c31cdb84ba150c3bd2",
+        "path": "README.md",
+        "location": "Runtime dependencies",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-002.md",
+      "limitations": []
+    },
+    {
+      "id": "SRC-003",
+      "reference_id": "REF-003",
+      "url": "https://docs.stripe.com/webhooks",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "Handle duplicate events; signature verification; preventing replay attacks",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-003.md",
+      "limitations": [
+        "Live documentation; immutable revision unavailable."
+      ]
+    },
+    {
+      "id": "SRC-004",
+      "reference_id": "REF-004",
+      "url": "https://www.sqlite.org/lang_conflict.html",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "IGNORE / UNIQUE constraints",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-004.md",
+      "limitations": [
+        "Live documentation; immutable revision unavailable."
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "EV-001",
+      "statement": "adnanh/webhook defines command execution and an option to wait for command output.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-001"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "The hook definition lists execute-command and optional response waiting.",
+      "scope": "Documented hook configuration, not its measured execution timing.",
+      "limitations": []
+    },
+    {
+      "id": "EV-002",
+      "statement": "Svix documents PostgreSQL event storage and an optional Redis queue/cache.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-002"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "Runtime dependencies explicitly distinguish required PostgreSQL from optional Redis.",
+      "scope": "Self-hosted Svix README; not a claim about its hosted internals.",
+      "limitations": []
+    },
+    {
+      "id": "EV-003",
+      "statement": "Stripe documents duplicate event deliveries and event-ID tracking.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-003"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "The duplicate-event guidance recommends recording handled event IDs.",
+      "scope": "Same event-ID retries; not semantic deduplication of different events.",
+      "limitations": []
+    },
+    {
+      "id": "EV-004",
+      "statement": "Stripe documents raw-body signing with timestamp checks and constant-time comparison.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-003"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "Manual verification/replay headings describe these controls.",
+      "scope": "Generic principle only; our local example is not a Stripe protocol implementation.",
+      "limitations": []
+    },
+    {
+      "id": "EV-005",
+      "statement": "SQLite documents IGNORE behavior for relevant uniqueness conflicts.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-004"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "ON CONFLICT documentation explains skipping a violating row.",
+      "scope": "SQLite conflict behavior, not universal exactly-once delivery.",
+      "limitations": []
+    },
+    {
+      "id": "EV-006",
+      "statement": "A local signed inbox can persist and deduplicate without a broker.",
+      "class": "INFERENCE",
+      "source_ids": [],
+      "premise_claim_ids": [
+        "EV-002",
+        "EV-003",
+        "EV-005"
+      ],
+      "requirement_ids": [],
+      "support_explanation": "Use a unique event ID and commit before reporting acceptance; verify own failure paths.",
+      "scope": "Educational one-process ingest core; downstream processing is excluded.",
+      "limitations": []
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "candidate": "Unique event ID in a local SQLite inbox",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-003",
+        "EV-005",
+        "EV-006"
+      ],
+      "rationale": "Deduplication and durable acceptance are the requested mechanisms.",
+      "alternatives": [
+        "In-memory set"
+      ],
+      "complexity_cost": "One table/transaction",
+      "scale_fit": "One local writer, no downstream jobs",
+      "revisit_trigger": "Independent ingest replicas or measured contention"
+    },
+    {
+      "id": "DEC-002",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "candidate": "Raw-body HMAC, timestamp window, bounded JSON input",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-004"
+      ],
+      "rationale": "Untrusted input must be checked before recording it.",
+      "alternatives": [
+        "Accept arbitrary unsigned JSON"
+      ],
+      "complexity_cost": "Local crypto/validation; own educational wire format",
+      "scale_fit": "Local signed-message core, not Stripe compatible",
+      "revisit_trigger": "Real provider integration requires its official verifier"
+    },
+    {
+      "id": "DEC-003",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "candidate": "PostgreSQL + separate Redis queue",
+      "outcome": "DEFER",
+      "evidence_ids": [
+        "EV-002",
+        "EV-006"
+      ],
+      "rationale": "No distributed processing or outgoing retries in the task.",
+      "alternatives": [
+        "Embedded SQLite"
+      ],
+      "complexity_cost": "External services and operational failure modes",
+      "scale_fit": "Beyond bounded inbox core",
+      "revisit_trigger": "Documented asynchronous processing requirement"
+    },
+    {
+      "id": "DEC-004",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "candidate": "Execute incoming payload-selected shell commands",
+      "outcome": "REJECT",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "rationale": "The task is to store events; command execution would add unnecessary authority.",
+      "alternatives": [
+        "Persist validated events only"
+      ],
+      "complexity_cost": "Execution surface and response coupling",
+      "scale_fit": "Different product job",
+      "revisit_trigger": "Separate explicitly authorized automation feature"
+    }
+  ],
+  "plan_units": [
+    {
+      "id": "STEP-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "decision_ids": [
+        "DEC-001",
+        "DEC-002"
+      ],
+      "outcome": "Build a durable generic signed webhook-inbox core",
+      "acceptance_checks": [
+        "CHECK-002"
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "id": "CHECK-001",
+      "requirement_ids": [],
+      "decision_ids": [],
+      "required": true,
+      "result": "PASS",
+      "method": "SOURCE_AUDIT",
+      "criterion": "Inspect primary support and scoped inference",
+      "command": "",
+      "evidence_path": "checks/CHECK-001.txt",
+      "tested_snapshot": "sources:webhook-inbox",
+      "checked_at": "2026-09-30T20:14:57+00:00"
+    },
+    {
+      "id": "CHECK-002",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "decision_ids": [
+        "DEC-001",
+        "DEC-002"
+      ],
+      "required": true,
+      "result": "PASS",
+      "method": "COMMAND",
+      "criterion": "Signature/timestamp failure, duplicate/conflicting event IDs, payload bounds/format and reopen persistence.",
+      "command": "python -m unittest discover -s . -p test_app.py -v",
+      "evidence_path": "checks/CHECK-002.txt",
+      "tested_snapshot": "files:sha256:1e962df56aaa751132cda94caa3dce9e136e6c10dcf96c6cbc6be377bdd11589",
+      "checked_at": "2026-09-30T20:46:23+00:00"
+    },
+    {
+      "id": "CHECK-003",
+      "requirement_ids": [],
+      "decision_ids": [
+        "DEC-003",
+        "DEC-004"
+      ],
+      "required": true,
+      "result": "PASS",
+      "method": "DIFF_REVIEW",
+      "criterion": "Inspect implementation for rejected/deferred complexity",
+      "command": "",
+      "evidence_path": "checks/CHECK-003.txt",
+      "tested_snapshot": "files:sha256:1e962df56aaa751132cda94caa3dce9e136e6c10dcf96c6cbc6be377bdd11589",
+      "checked_at": "2026-09-30T20:46:23+00:00"
+    }
+  ]
+}

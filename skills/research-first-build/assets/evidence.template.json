@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "run_id": "your-task-slug",
+  "intent": "full",
+  "scope": {
+    "goal": "",
+    "constraints": [],
+    "non_goals": []
+  },
+  "coverage": {
+    "depth": "default",
+    "reference_exception": "",
+    "rejection_note": "",
+    "limitations": []
+  },
+  "questions": [],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "text": "",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "",
+      "acceptance": "",
+      "critical": true
+    }
+  ],
+  "references": [
+    {
+      "id": "REF-001",
+      "canonical_url": "",
+      "relevance": "",
+      "mismatch": "",
+      "selection_rationale": "",
+      "activity": {
+        "description": "",
+        "source": "",
+        "checked_at": ""
+      },
+      "license_record": {
+        "status": "MISSING",
+        "spdx": "",
+        "locator": "",
+        "scope": "",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-001",
+      "reference_id": "REF-001",
+      "url": "",
+      "accessed_at": "",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-001.md",
+      "limitations": []
+    }
+  ],
+  "claims": [
+    {
+      "id": "EV-001",
+      "statement": "",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-001"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "",
+      "scope": "",
+      "limitations": []
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "candidate": "",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "rationale": "",
+      "alternatives": [],
+      "complexity_cost": "",
+      "scale_fit": "",
+      "revisit_trigger": ""
+    }
+  ],
+  "plan_units": [
+    {
+      "id": "STEP-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "decision_ids": [
+        "DEC-001"
+      ],
+      "outcome": "",
+      "acceptance_checks": [
+        "CHECK-002"
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "id": "CHECK-001",
+      "requirement_ids": [],
+      "decision_ids": [],
+      "required": true,
+      "result": "NOT_RUN",
+      "method": "SOURCE_AUDIT",
+      "criterion": "",
+      "command": "",
+      "evidence_path": "",
+      "tested_snapshot": "",
+      "checked_at": ""
+    },
+    {
+      "id": "CHECK-002",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "decision_ids": [
+        "DEC-001"
+      ],
+      "required": true,
+      "result": "NOT_RUN",
+      "method": "COMMAND",
+      "criterion": "",
+      "command": "",
+      "evidence_path": "",
+      "tested_snapshot": "",
+      "checked_at": ""
+    }
+  ]
+}

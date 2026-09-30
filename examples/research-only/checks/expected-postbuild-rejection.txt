@@ -1,0 +1,8 @@
+FAIL (postbuild):
+  - Research-only is a handoff, not a completed build
+  - Current snapshot missing: supply --snapshot from an actual host inspection
+  - CHECK-002: tested snapshot differs from current snapshot
+  - CHECK-003: required check is NOT_RUN, not PASS
+  - CHECK-004: required check is NOT_RUN, not PASS
+  - CHECK-005: required check is NOT_RUN, not PASS
+  - DEC-005: rejected/deferred complexity needs required diff review

@@ -1,0 +1,2 @@
+# Development only; the installed skill and offline behavior tests have no pip dependencies.
+ruff==0.16.9

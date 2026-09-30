@@ -1,0 +1,3 @@
+Actual current-package check; exit 1
+FAIL (postbuild):
+  - Research-only is a handoff, not a completed build; use prebuild instead

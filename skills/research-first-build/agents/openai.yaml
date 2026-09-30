@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research First Builder"
+  short_description: "Research real software before your agent builds"
+  default_prompt: "Use $research-first-build to research relevant software, justify a minimal plan, then build and verify my project."

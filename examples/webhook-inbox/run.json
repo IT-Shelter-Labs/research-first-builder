@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "run_id": "webhook-inbox",
+  "stage": "COMPLETE",
+  "prebuild_receipt": {
+    "fingerprint": "714553770083a35e335a2dfbe684604d74ef1cdf4aef9804f8d0eb9862cceec3",
+    "checked_at": "2026-09-30T20:14:57+00:00"
+  },
+  "postbuild_receipt": {
+    "fingerprint": "714553770083a35e335a2dfbe684604d74ef1cdf4aef9804f8d0eb9862cceec3",
+    "checked_at": "2026-09-30T20:46:23+00:00",
+    "snapshot": "files:sha256:1e962df56aaa751132cda94caa3dce9e136e6c10dcf96c6cbc6be377bdd11589",
+    "evidence_hash": "23a73891acca87b354d92442bda02fb5291decf7e8ba8fac55aa7ad99edf5ac8",
+    "check_outputs": {
+      "checks/CHECK-001.txt": "13a39fb0347cfc85ebb12a0ba1b53051398090187d54b8cc55aba9d8fc02f000",
+      "checks/CHECK-002.txt": "c11a303af7e0120420a3a7c627eedf41f5c61ac384da57a125bf9679900e8970",
+      "checks/CHECK-003.txt": "0a1a944b2a3ddf02eb18b6bbef2b91bf8b0afaac3b9ca81725b20038335d0c15"
+    },
+    "verification_hash": "4dc2c32295dc3b566e2c6756b2e25c36d74e3b30af1fb3b878bb1b9a7443058e"
+  },
+  "rendered_at": "2026-09-30T20:46:23+00:00"
+}

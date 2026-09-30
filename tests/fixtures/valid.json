@@ -1,0 +1,225 @@
+{
+  "schema_version": 1,
+  "run_id": "synthetic-fixture",
+  "intent": "full",
+  "scope": {
+    "goal": "Synthetic fixture: record a local event once",
+    "constraints": [
+      "One local process"
+    ],
+    "non_goals": [
+      "Distributed orchestration"
+    ]
+  },
+  "coverage": {
+    "depth": "quick",
+    "reference_exception": "",
+    "rejection_note": "",
+    "limitations": [
+      "Synthetic test data; no web research occurred."
+    ]
+  },
+  "questions": [
+    {
+      "question": "Is a local design sufficient?",
+      "critical": true,
+      "status": "ANSWERED",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "resolution": "Synthetic evidence describes the bounded mechanism."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "text": "Record duplicate event IDs once (synthetic)",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "Synthetic test brief",
+      "acceptance": "Duplicate input produces one stored row",
+      "critical": true
+    }
+  ],
+  "references": [
+    {
+      "id": "REF-001",
+      "canonical_url": "https://example.com/alpha",
+      "relevance": "Synthetic reference for contract tests",
+      "mismatch": "No actual repository inspection",
+      "selection_rationale": "Test fixture only",
+      "activity": {
+        "description": "Synthetic activity record",
+        "source": "https://example.com/alpha/activity",
+        "checked_at": "2026-09-30T16:00:00+00:00"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "MIT",
+        "locator": "https://example.com/alpha/LICENSE",
+        "scope": "Synthetic fixture, not an actual rights review",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    },
+    {
+      "id": "REF-002",
+      "canonical_url": "https://example.com/beta",
+      "relevance": "Synthetic reference for contract tests",
+      "mismatch": "No actual repository inspection",
+      "selection_rationale": "Test fixture only",
+      "activity": {
+        "description": "Synthetic activity record",
+        "source": "https://example.com/beta/activity",
+        "checked_at": "2026-09-30T16:00:00+00:00"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "MIT",
+        "locator": "https://example.com/beta/LICENSE",
+        "scope": "Synthetic fixture, not an actual rights review",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-001",
+      "reference_id": "REF-001",
+      "url": "https://example.com/alpha/docs",
+      "accessed_at": "2026-09-30T16:00:00+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "Synthetic idempotency heading",
+        "version": "test",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-001.md",
+      "limitations": [
+        "Synthetic only"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "EV-001",
+      "statement": "Synthetic fixture mechanism records unique IDs",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-001"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "Synthetic source note for invariant tests",
+      "scope": "Unit test only",
+      "limitations": [
+        "Not real research"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "candidate": "Local unique event ID",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "rationale": "Fits the synthetic bounded local requirement",
+      "alternatives": [
+        "Append without deduplication"
+      ],
+      "complexity_cost": "One local constraint",
+      "scale_fit": "One process",
+      "revisit_trigger": "Multiple independent writers"
+    },
+    {
+      "id": "DEC-002",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "candidate": "Distributed event broker",
+      "outcome": "REJECT",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "rationale": "No distributed workload in the synthetic scope",
+      "alternatives": [
+        "Local event table"
+      ],
+      "complexity_cost": "Extra service and failure modes",
+      "scale_fit": "Too large for this scope",
+      "revisit_trigger": "Independent services need durable fan-out"
+    }
+  ],
+  "plan_units": [
+    {
+      "id": "STEP-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "decision_ids": [
+        "DEC-001"
+      ],
+      "outcome": "Store input with unique IDs",
+      "acceptance_checks": [
+        "CHECK-002"
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "id": "CHECK-001",
+      "requirement_ids": [],
+      "decision_ids": [],
+      "required": true,
+      "result": "PASS",
+      "method": "SOURCE_AUDIT",
+      "criterion": "Inspect synthetic source support",
+      "command": "",
+      "evidence_path": "checks/CHECK-001.txt",
+      "tested_snapshot": "sources:synthetic-v1",
+      "checked_at": "2026-09-30T16:00:00+00:00"
+    },
+    {
+      "id": "CHECK-002",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "decision_ids": [
+        "DEC-001"
+      ],
+      "required": true,
+      "result": "NOT_RUN",
+      "method": "COMMAND",
+      "criterion": "Duplicate is stored once",
+      "command": "python test_example.py",
+      "evidence_path": "",
+      "tested_snapshot": "",
+      "checked_at": ""
+    },
+    {
+      "id": "CHECK-003",
+      "requirement_ids": [],
+      "decision_ids": [
+        "DEC-002"
+      ],
+      "required": true,
+      "result": "NOT_RUN",
+      "method": "DIFF_REVIEW",
+      "criterion": "No rejected broker added",
+      "command": "",
+      "evidence_path": "",
+      "tested_snapshot": "",
+      "checked_at": ""
+    }
+  ]
+}

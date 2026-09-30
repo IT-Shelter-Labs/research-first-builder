@@ -1,0 +1,440 @@
+{
+  "schema_version": 1,
+  "run_id": "team-chat",
+  "intent": "full",
+  "scope": {
+    "goal": "Build a durable room-scoped message-history core",
+    "constraints": [
+      "Python stdlib",
+      "one process/local database",
+      "30-user product context"
+    ],
+    "non_goals": [
+      "HTTP/UI",
+      "authentication",
+      "federation",
+      "push delivery"
+    ]
+  },
+  "coverage": {
+    "depth": "default",
+    "reference_exception": "",
+    "rejection_note": "",
+    "limitations": [
+      "Maintainer-authored walkthrough, not a controlled autonomous-host benchmark.",
+      "Primary sources inspected; reference projects not installed or executed."
+    ]
+  },
+  "questions": [
+    {
+      "question": "What is the smallest mechanism that meets this bounded task?",
+      "critical": true,
+      "status": "ANSWERED",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-003",
+        "EV-004",
+        "EV-005",
+        "EV-006"
+      ],
+      "resolution": "One original ChatStore module with a parameterized message table and (room, id) index. Persistence is ADOPT; federation/ephemeral retention are REJECT; push/jobs are DEFER."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "text": "Preserve messages across reopening the local store.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "TASK.md in this example",
+      "acceptance": "Saved messages survive close/reopen.",
+      "critical": true
+    },
+    {
+      "id": "REQ-002",
+      "text": "Read room-scoped ordered history and reject invalid input.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "TASK.md in this example",
+      "acceptance": "No room leakage; bounded reads; empty/oversized inputs rejected.",
+      "critical": true
+    }
+  ],
+  "references": [
+    {
+      "id": "REF-001",
+      "canonical_url": "https://github.com/zulip/zulip",
+      "relevance": "Durable team-chat history and recipient locality",
+      "mismatch": "Much broader real-time product",
+      "selection_rationale": "Inspected a concrete mechanism relevant to the task; no popularity score.",
+      "activity": {
+        "description": "Last repository push 2026-09-30T08:15:22Z; metadata read 2026-09-30.",
+        "source": "https://api.github.com/repos/zulip/zulip",
+        "checked_at": "2026-09-30T17:27:10.0788748Z"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "Apache-2.0",
+        "locator": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/LICENSE",
+        "scope": "Root license and relevant README/source scope; no source/text copied.",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    },
+    {
+      "id": "REF-002",
+      "canonical_url": "https://github.com/tinode/chat",
+      "relevance": "Chat product boundary comparison",
+      "mismatch": "Federation/mobile platform",
+      "selection_rationale": "Inspected a concrete mechanism relevant to the task; no popularity score.",
+      "activity": {
+        "description": "Last repository push 2026-09-27T14:50:17Z; metadata read 2026-09-30.",
+        "source": "https://api.github.com/repos/tinode/chat",
+        "checked_at": "2026-09-30T17:27:18.9702537Z"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "GPL-3.0-only",
+        "locator": "https://github.com/tinode/chat/blob/eb90ef83acae6542f52719377ee5a76d267a5618/LICENSE",
+        "scope": "Root license and relevant README/source scope; no source/text copied.",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    },
+    {
+      "id": "REF-003",
+      "canonical_url": "https://github.com/hack-chat/main",
+      "relevance": "Small chat counterexample",
+      "mismatch": "Ephemeral retention conflicts with our goal",
+      "selection_rationale": "Inspected a concrete mechanism relevant to the task; no popularity score.",
+      "activity": {
+        "description": "Last repository push 2026-09-24T17:13:15Z; metadata read 2026-09-30.",
+        "source": "https://api.github.com/repos/hack-chat/main",
+        "checked_at": "2026-09-30T17:27:30.0844100Z"
+      },
+      "license_record": {
+        "status": "DECLARED_ONLY",
+        "spdx": "MIT",
+        "locator": "https://github.com/hack-chat/main/blob/e5a50c83bb043bedea1455e26c3baf33370686ea/LICENSE",
+        "scope": "Root license and relevant README/source scope; no source/text copied.",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-001",
+      "reference_id": "REF-001",
+      "url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/docs/overview/architecture-overview.md",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "path": "docs/overview/architecture-overview.md",
+        "location": "Components: PostgreSQL; Django and Tornado; RabbitMQ",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-001.md",
+      "limitations": []
+    },
+    {
+      "id": "SRC-002",
+      "reference_id": "REF-001",
+      "url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/zerver/models/messages.py",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "IMPLEMENTATION",
+      "locator": {
+        "revision": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "path": "zerver/models/messages.py",
+        "location": "AbstractMessage.recipient and Message.Meta indexes (lines 25-38, 190-208)",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-002.md",
+      "limitations": []
+    },
+    {
+      "id": "SRC-003",
+      "reference_id": "REF-002",
+      "url": "https://github.com/tinode/chat/blob/eb90ef83acae6542f52719377ee5a76d267a5618/README.md",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "eb90ef83acae6542f52719377ee5a76d267a5618",
+        "path": "README.md",
+        "location": "Why?",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-003.md",
+      "limitations": []
+    },
+    {
+      "id": "SRC-004",
+      "reference_id": "REF-003",
+      "url": "https://github.com/hack-chat/main/blob/e5a50c83bb043bedea1455e26c3baf33370686ea/README.md",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "e5a50c83bb043bedea1455e26c3baf33370686ea",
+        "path": "README.md",
+        "location": "Opening product description",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-004.md",
+      "limitations": []
+    }
+  ],
+  "claims": [
+    {
+      "id": "EV-001",
+      "statement": "Zulip documents PostgreSQL for persistent data.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-001"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "PostgreSQL section explicitly describes storage beyond a session.",
+      "scope": "Documented Zulip storage, not a prescription for our MVP.",
+      "limitations": []
+    },
+    {
+      "id": "EV-002",
+      "statement": "Zulip's Message model has a recipient field and recipient-related indexes.",
+      "class": "OPEN_SOURCE_IMPLEMENTATION",
+      "source_ids": [
+        "SRC-002"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "The inspected field and Meta indexes link message retrieval to recipients.",
+      "scope": "This model/file only; not the whole authorization pipeline.",
+      "limitations": []
+    },
+    {
+      "id": "EV-003",
+      "statement": "Tinode describes federation as a project goal.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-003"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "The Why section states federation and mobile communication goals.",
+      "scope": "Documented product goal, not verified interoperability.",
+      "limitations": []
+    },
+    {
+      "id": "EV-004",
+      "statement": "hack.chat describes itself as logless and disappearing chat.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-004"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "The opening description establishes an ephemeral product boundary.",
+      "scope": "Documented behavior, not personally observed retention.",
+      "limitations": []
+    },
+    {
+      "id": "EV-005",
+      "statement": "A single local SQLite store fits this educational durable-history scope.",
+      "class": "INFERENCE",
+      "source_ids": [],
+      "premise_claim_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-004"
+      ],
+      "requirement_ids": [],
+      "support_explanation": "Adapt persistence/recipient-scoped retrieval to one local process; verify our own code.",
+      "scope": "Our constrained design; no assertion that the references use SQLite.",
+      "limitations": []
+    },
+    {
+      "id": "EV-006",
+      "statement": "Zulip documents long-lived delivery and expensive background work as distinct roles.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-001"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "Tornado and RabbitMQ sections describe these responsibilities.",
+      "scope": "These roles exist in the documented Zulip deployment; our task excludes them.",
+      "limitations": []
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "candidate": "One SQLite durable message table",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-005"
+      ],
+      "rationale": "Durability is required; one process/file is enough.",
+      "alternatives": [
+        "An append-only JSON file"
+      ],
+      "complexity_cost": "One embedded database, no service",
+      "scale_fit": "30 users; storage core only",
+      "revisit_trigger": "Sustained concurrent writer demand"
+    },
+    {
+      "id": "DEC-002",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "candidate": "Room-scoped ordered query with bounded input",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-002",
+        "EV-005"
+      ],
+      "rationale": "Recipient locality informs our simpler room boundary.",
+      "alternatives": [
+        "Full message list scanning"
+      ],
+      "complexity_cost": "One composite index and validation",
+      "scale_fit": "Small local history",
+      "revisit_trigger": "Search/product requirements expand"
+    },
+    {
+      "id": "DEC-003",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "candidate": "Logless ephemeral retention",
+      "outcome": "REJECT",
+      "evidence_ids": [
+        "EV-004"
+      ],
+      "rationale": "Conflicts with explicit durable history.",
+      "alternatives": [
+        "Persist local messages"
+      ],
+      "complexity_cost": "Simple but loses required history",
+      "scale_fit": "Wrong retention boundary",
+      "revisit_trigger": "User explicitly requests ephemeral chat"
+    },
+    {
+      "id": "DEC-004",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "candidate": "Federation protocol",
+      "outcome": "REJECT",
+      "evidence_ids": [
+        "EV-003"
+      ],
+      "rationale": "No cross-server communication is requested.",
+      "alternatives": [
+        "One local store"
+      ],
+      "complexity_cost": "Protocol/identity/operations complexity",
+      "scale_fit": "Beyond one-server scope",
+      "revisit_trigger": "Federated product requirement"
+    },
+    {
+      "id": "DEC-005",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "candidate": "Separate delivery/background infrastructure",
+      "outcome": "DEFER",
+      "evidence_ids": [
+        "EV-006"
+      ],
+      "rationale": "This slice implements storage, not push or notification jobs.",
+      "alternatives": [
+        "Direct synchronous storage operations"
+      ],
+      "complexity_cost": "Extra processes, queues and monitoring",
+      "scale_fit": "Not needed for storage-core tests",
+      "revisit_trigger": "Measured push/job workload"
+    }
+  ],
+  "plan_units": [
+    {
+      "id": "STEP-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "decision_ids": [
+        "DEC-001",
+        "DEC-002"
+      ],
+      "outcome": "Build a durable room-scoped message-history core",
+      "acceptance_checks": [
+        "CHECK-002"
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "id": "CHECK-001",
+      "requirement_ids": [],
+      "decision_ids": [],
+      "required": true,
+      "result": "PASS",
+      "method": "SOURCE_AUDIT",
+      "criterion": "Inspect primary support and scoped inference",
+      "command": "",
+      "evidence_path": "checks/CHECK-001.txt",
+      "tested_snapshot": "sources:team-chat",
+      "checked_at": "2026-09-30T20:14:57+00:00"
+    },
+    {
+      "id": "CHECK-002",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "decision_ids": [
+        "DEC-001",
+        "DEC-002"
+      ],
+      "required": true,
+      "result": "PASS",
+      "method": "COMMAND",
+      "criterion": "Reopen persistence, room isolation/order, Unicode/SQL-like text, empty/oversized input, bounded history.",
+      "command": "python -m unittest discover -s . -p test_app.py -v",
+      "evidence_path": "checks/CHECK-002.txt",
+      "tested_snapshot": "files:sha256:2820c2116ea0cd1a60f14440dd8b5b55dabc30bc3692d72c7131a241a964ef32",
+      "checked_at": "2026-09-30T20:46:22+00:00"
+    },
+    {
+      "id": "CHECK-003",
+      "requirement_ids": [],
+      "decision_ids": [
+        "DEC-003",
+        "DEC-004",
+        "DEC-005"
+      ],
+      "required": true,
+      "result": "PASS",
+      "method": "DIFF_REVIEW",
+      "criterion": "Inspect implementation for rejected/deferred complexity",
+      "command": "",
+      "evidence_path": "checks/CHECK-003.txt",
+      "tested_snapshot": "files:sha256:2820c2116ea0cd1a60f14440dd8b5b55dabc30bc3692d72c7131a241a964ef32",
+      "checked_at": "2026-09-30T20:46:22+00:00"
+    }
+  ]
+}

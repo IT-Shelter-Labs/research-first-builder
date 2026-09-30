@@ -1,0 +1,2 @@
+Actual current-package check; exit 0
+CONTRACT_CHECKED (prebuild). Recorded source audit checked structurally; factual truth and authorization remain outside this checker.

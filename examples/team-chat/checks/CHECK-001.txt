@@ -1,0 +1,10 @@
+Actual maintainer-agent source audit, 2026-09-30T20:14:57+00:00
+Method: read original primary docs/files, compare each narrow claim and its scope.
+EV-001: Supported by inspected locator in SRC-001.
+EV-002: Supported by inspected locator in SRC-002.
+EV-003: Supported by inspected locator in SRC-003.
+EV-004: Supported by inspected locator in SRC-004.
+EV-005: INFERENCE, not a verified source assertion.
+EV-006: Supported by inspected locator in SRC-001.
+License scope: actual fetched repository licenses inspected where available; missing documentation rights and missing hack.chat license file remain declared/unknown. PATTERN_ONLY throughout.
+Verdict: PASS for recorded support/classification; no runtime/performance claims.

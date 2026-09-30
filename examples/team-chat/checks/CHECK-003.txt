@@ -1,0 +1,10 @@
+Actual maintainer-agent diff review, 2026-10-01
+Scope: app.py and test_app.py (normalized LF manifest)
+Snapshot: files:sha256:559b16b0dec05869dcdc77caece73f6feb344ff347ea8d11e5938b5f88ef924d
+
+DEC-003: messages are committed in SQLite and reopened by test_persistence; no disappearing retention. DEC-004: app.py imports only sqlite3, with no network/federation identity or protocol. DEC-005: send/history are direct local operations; no queue, delivery worker or push service. Inspected complete app.py and test_app.py after implementation. This scope deliberately excludes authentication; room filtering is not an authorization system.
+Verdict: PASS for absence of rejected/deferred complexity in inspected scope.
+
+Actual post-format review: app.py/test_app.py have unchanged parsed AST relative to the previously inspected implementation; complete files retain the reviewed scope. Only formatting and separating import blocks changed.
+Current snapshot: files:sha256:2820c2116ea0cd1a60f14440dd8b5b55dabc30bc3692d72c7131a241a964ef32
+Verdict: PASS; substantive rejection/defer conclusions remain applicable.

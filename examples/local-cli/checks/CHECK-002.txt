@@ -1,0 +1,16 @@
+Actual run: Python 3.11.0, win32
+Command: python -m unittest discover -s . -p test_app.py -v
+Snapshot: files:sha256:1a7f44dd8c9a180f0d87c492055398078f11cfa8dae2dc1caa0e7ed94a1222a1
+Exit: 0
+
+test_bad_lines (test_app.FilterTests.test_bad_lines) ... ok
+test_cli_empty_success (test_app.FilterTests.test_cli_empty_success) ... ok
+test_cli_partial_output_and_status (test_app.FilterTests.test_cli_partial_output_and_status) ... ok
+test_exact_bytes_and_no_coercion (test_app.FilterTests.test_exact_bytes_and_no_coercion) ... ok
+test_lazy_first_match (test_app.FilterTests.test_lazy_first_match) ... ok
+test_literal_top_level (test_app.FilterTests.test_literal_top_level) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.090s
+
+OK

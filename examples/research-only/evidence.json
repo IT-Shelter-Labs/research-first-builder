@@ -1,0 +1,696 @@
+{
+  "schema_version": 1,
+  "run_id": "jsonl-filter-forward-test",
+  "intent": "research-only",
+  "scope": {
+    "goal": "Research and design a small local literal top-level-field JSON Lines filter CLI without implementation.",
+    "constraints": [
+      "stdin to stdout streaming; clean stderr errors",
+      "local processing only; simple installation",
+      "research-only: no application code writes"
+    ],
+    "non_goals": [
+      "Application implementation now",
+      "General expression language, nested paths, regex, log database, GUI, network service",
+      "Third-party source reuse"
+    ]
+  },
+  "coverage": {
+    "depth": "quick",
+    "reference_exception": "",
+    "rejection_note": "",
+    "limitations": [
+      "No source projects installed/executed; documented evidence only.",
+      "No actual CLI performance, latency or cross-platform test yet.",
+      "Python runtime availability is an assumption, not user confirmation.",
+      "JSON Lines website license not retrieved; pattern-only study."
+    ]
+  },
+  "questions": [
+    {
+      "question": "Which framing and matching contract fits logs?",
+      "critical": true,
+      "status": "ANSWERED",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-006"
+      ],
+      "resolution": "Strict physical-line JSONL, literal top-level keys and string-only comparison; valid nonobjects do not match."
+    },
+    {
+      "question": "How to make malformed input useful without leaking logs?",
+      "critical": true,
+      "status": "ANSWERED",
+      "evidence_ids": [
+        "EV-003",
+        "EV-004",
+        "EV-005",
+        "EV-006"
+      ],
+      "resolution": "Global 1-based line and character column when available; error kind only for encoding/duplicates/runtime bounds; stderr, fail-fast exit 1."
+    },
+    {
+      "question": "What is the smallest viable distribution?",
+      "critical": true,
+      "status": "ANSWERED",
+      "evidence_ids": [
+        "EV-003",
+        "EV-006"
+      ],
+      "resolution": "One stdlib-only script under explicit Python 3.11+ availability assumption; jq was evaluated as the existing-tool alternative."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "text": "Deliver research/design/plan only; do not implement yet.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "Delegated realistic request, quoted in RESEARCH.md",
+      "acceptance": "Only research artifacts exist at handoff; no application sources, packaging or tests.",
+      "critical": true
+    },
+    {
+      "id": "REQ-002",
+      "text": "Match a named top-level field to a literal string.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "Delegated realistic request, quoted in RESEARCH.md",
+      "acceptance": "Only a decoded string equal to the supplied value matches; keys with dots are literal keys.",
+      "critical": true
+    },
+    {
+      "id": "REQ-003",
+      "text": "Small local CLI streams stdin to stdout.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "Delegated realistic request, quoted in RESEARCH.md",
+      "acceptance": "Processes one physical line at a time; matched original bytes emitted before EOF; no network or whole-input read.",
+      "critical": true
+    },
+    {
+      "id": "REQ-004",
+      "text": "Report malformed input clearly.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "Delegated realistic request, quoted in RESEARCH.md",
+      "acceptance": "First invalid record produces safe line/column or error-kind diagnostic on stderr, nonzero status, and stops.",
+      "critical": true
+    },
+    {
+      "id": "REQ-005",
+      "text": "Keep installation simple.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "Delegated realistic request, quoted in RESEARCH.md",
+      "acceptance": "Proposed distribution is one script requiring Python 3.11+, no pip dependencies or service.",
+      "critical": true
+    },
+    {
+      "id": "REQ-006",
+      "text": "Assume operators already have Python 3.11+ and ordinary bounded records, not adversarial multi-gigabyte lines.",
+      "origin": "ASSUMPTION",
+      "source_locator": "Conservative assumption in RESEARCH.md, not a user statement",
+      "acceptance": "Document runtime prerequisite and largest-record memory bound; revisit binary distribution if prerequisite fails.",
+      "critical": true
+    }
+  ],
+  "references": [
+    {
+      "id": "REF-001",
+      "canonical_url": "https://jsonlines.org/",
+      "relevance": "Format contract for operational logs",
+      "mismatch": "Format documentation, not a filtering program",
+      "selection_rationale": "Smallest counterexample: framing specification needs no framework",
+      "activity": {
+        "description": "Site footer generated 2026-09-26 00:50:35 UTC; no release cadence implied",
+        "source": "https://jsonlines.org/",
+        "checked_at": "2026-09-30T19:46:49+00:00"
+      },
+      "license_record": {
+        "status": "MISSING",
+        "spdx": "",
+        "locator": "",
+        "scope": "Format website; LICENSE retrieval failed; rights unknown",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": "No third-party source copied; architectural patterns only."
+      }
+    },
+    {
+      "id": "REF-002",
+      "canonical_url": "https://jqlang.org/manual/v1.8/",
+      "relevance": "Existing local stdin/stdout JSON filtering CLI",
+      "mismatch": "General expression language; default framing accepts whitespace-separated values",
+      "selection_rationale": "Direct job analogue and simpler existing-tool alternative",
+      "activity": {
+        "description": "Official site lists jq 1.8.2 released 20 June 2026",
+        "source": "https://jqlang.org/",
+        "checked_at": "2026-09-30T19:46:49+00:00"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "MIT; CC-BY-3.0",
+        "locator": "https://raw.githubusercontent.com/jqlang/jq/jq-1.8.1/COPYING",
+        "scope": "jq code versus docs explicitly distinguished in COPYING; bundled rights separate",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": "No third-party source copied; architectural patterns only."
+      }
+    },
+    {
+      "id": "REF-003",
+      "canonical_url": "https://docs.python.org/3.11/library/json.html",
+      "relevance": "Documented local JSON-lines stdin/stdout CLI plus parser and arguments",
+      "mismatch": "Validator/formatter does not implement literal-field filtering",
+      "selection_rationale": "Dependency-free direct implementation alternative",
+      "activity": {
+        "description": "Python 3.11.16 docs footer last updated Sep 30 2026 (13:40 UTC)",
+        "source": "https://docs.python.org/3.11/library/json.html",
+        "checked_at": "2026-09-30T19:46:49+00:00"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "PSF-2.0",
+        "locator": "https://docs.python.org/3.11/license.html",
+        "scope": "Python and docs, examples additionally 0BSD; no code copied",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": "No third-party source copied; architectural patterns only."
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-001",
+      "reference_id": "REF-001",
+      "url": "https://jsonlines.org/",
+      "accessed_at": "2026-09-30T17:29:20+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "JSON Lines requirements 1-3 and footer",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-001.md",
+      "limitations": [
+        "Does not prescribe filtering, duplicate keys, runtime, or application error policy."
+      ]
+    },
+    {
+      "id": "SRC-002",
+      "reference_id": "REF-002",
+      "url": "https://jqlang.org/manual/v1.8/",
+      "accessed_at": "2026-09-30T17:29:20+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "jq 1.8: Invoking jq; --arg; --slurp; --unbuffered; Object Index; select(boolean_expression)",
+        "version": "1.8",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-002.md",
+      "limitations": [
+        "Documents behavior, not a tested invocation; ordinary JSON input differs from strict physical-line JSONL."
+      ]
+    },
+    {
+      "id": "SRC-003",
+      "reference_id": "REF-003",
+      "url": "https://docs.python.org/3.11/library/json.html",
+      "accessed_at": "2026-09-30T17:29:20+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "Python 3.11.16: json.loads; JSONDecoder; Exceptions; Standard Compliance",
+        "version": "3.11.16",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-003.md",
+      "limitations": [
+        "Documentation inspection only, no parser execution or performance benchmark. Runtime-specific size/depth limits remain."
+      ]
+    },
+    {
+      "id": "SRC-004",
+      "reference_id": "REF-003",
+      "url": "https://docs.python.org/3.11/library/argparse.html",
+      "accessed_at": "2026-09-30T17:29:20+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "Python 3.11.16: ArgumentParser.error",
+        "version": "3.11.16",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-004.md",
+      "limitations": [
+        "This documents argument errors, not custom malformed-record policy."
+      ]
+    },
+    {
+      "id": "SRC-005",
+      "reference_id": "REF-003",
+      "url": "https://docs.python.org/3.11/library/sys.html",
+      "accessed_at": "2026-09-30T17:29:20+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "Python 3.11.16: sys.stdin, sys.stdout, sys.stderr",
+        "version": "3.11.16",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-005.md",
+      "limitations": [
+        "No actual Windows/Linux CLI behavior observed. Tests must use byte-safe pipes."
+      ]
+    },
+    {
+      "id": "SRC-006",
+      "reference_id": "REF-002",
+      "url": "https://raw.githubusercontent.com/jqlang/jq/jq-1.8.1/COPYING",
+      "accessed_at": "2026-09-30T19:46:49+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "jq-1.8.1 COPYING lines 0-26",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-006.md",
+      "limitations": [
+        "Not a legal compatibility determination."
+      ]
+    },
+    {
+      "id": "SRC-007",
+      "reference_id": "REF-003",
+      "url": "https://docs.python.org/3.11/license.html",
+      "accessed_at": "2026-09-30T19:46:49+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "Terms and conditions; PSF License Agreement for Python 3.11.16",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-007.md",
+      "limitations": [
+        "Not a legal compatibility determination."
+      ]
+    },
+    {
+      "id": "SRC-008",
+      "reference_id": "REF-001",
+      "url": "https://raw.githubusercontent.com/wardi/jsonlines/master/LICENSE",
+      "accessed_at": "2026-09-30T19:46:49+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "",
+        "path": "",
+        "location": "Attempted LICENSE lookup",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "UNAVAILABLE",
+      "note_path": "sources/SRC-008.md",
+      "limitations": [
+        "License lookup returned Internal Error; rights unknown."
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "EV-001",
+      "statement": "UTF-8, no BOM; each physical line is a valid JSON value, including scalars; blank lines invalid. LF and CRLF accepted; last newline optional. Footer generated 2026-09-26.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-001"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "Directly described at SRC-001 locator; inspection is documented, not personally observed CLI execution.",
+      "scope": "Inspected documentation version and headings only",
+      "limitations": [
+        "Does not prove suitability or actual application behavior."
+      ]
+    },
+    {
+      "id": "EV-002",
+      "statement": "Input consists of whitespace-separated JSON values. --arg binds a string. select passes or drops input. --slurp collects all input; --unbuffered flushes each output.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-002"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "Directly described at SRC-002 locator; inspection is documented, not personally observed CLI execution.",
+      "scope": "Inspected documentation version and headings only",
+      "limitations": [
+        "Does not prove suitability or actual application behavior."
+      ]
+    },
+    {
+      "id": "EV-003",
+      "statement": "JSONDecodeError exposes message and column. Defaults accept NaN/Infinity and duplicate names (last wins); parse_constant and object_pairs_hook allow changing behavior. json.tool supports --json-lines.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-003"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "Directly described at SRC-003 locator; inspection is documented, not personally observed CLI execution.",
+      "scope": "Inspected documentation version and headings only",
+      "limitations": [
+        "Does not prove suitability or actual application behavior."
+      ]
+    },
+    {
+      "id": "EV-004",
+      "statement": "ArgumentParser.error prints usage/error to stderr and exits with status 2.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-004"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "Directly described at SRC-004 locator; inspection is documented, not personally observed CLI execution.",
+      "scope": "Inspected documentation version and headings only",
+      "limitations": [
+        "Does not prove suitability or actual application behavior."
+      ]
+    },
+    {
+      "id": "EV-005",
+      "statement": "Standard streams offer binary buffer objects. Noninteractive stdout is block-buffered; Windows pipes may use locale encoding in text mode.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-005"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "Directly described at SRC-005 locator; inspection is documented, not personally observed CLI execution.",
+      "scope": "Inspected documentation version and headings only",
+      "limitations": [
+        "Does not prove suitability or actual application behavior."
+      ]
+    },
+    {
+      "id": "EV-006",
+      "statement": "One script using standard-library parsing and binary line I/O fits the narrow job under the Python-available assumption; this is a design inference.",
+      "class": "INFERENCE",
+      "source_ids": [],
+      "premise_claim_ids": [
+        "EV-001",
+        "EV-003",
+        "EV-004",
+        "EV-005"
+      ],
+      "requirement_ids": [
+        "REQ-002",
+        "REQ-003",
+        "REQ-004",
+        "REQ-005",
+        "REQ-006"
+      ],
+      "support_explanation": "Combines documented primitives with narrow requirements; no benchmark or deployment evidence claimed.",
+      "scope": "Proposed local operational CLI only",
+      "limitations": [
+        "Python must already be installed; very large/deep records have runtime bounds."
+      ]
+    },
+    {
+      "id": "EV-007",
+      "statement": "The request explicitly forbids application implementation in this run.",
+      "class": "USER_REQUIREMENT",
+      "source_ids": [],
+      "premise_claim_ids": [],
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "support_explanation": "Direct quote in RESEARCH.md from delegated user scenario.",
+      "scope": "This run",
+      "limitations": []
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "candidate": "Stop after researched handoff",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-007"
+      ],
+      "rationale": "Research-only is the requested outcome.",
+      "alternatives": [
+        "Implement now"
+      ],
+      "complexity_cost": "Three reports plus ledger; no application writes.",
+      "scale_fit": "No application deployment this run.",
+      "revisit_trigger": "Implement only after a new explicit request."
+    },
+    {
+      "id": "DEC-002",
+      "requirement_ids": [
+        "REQ-002",
+        "REQ-003"
+      ],
+      "candidate": "Direct byte-line loop and literal decoded-string comparison",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-001",
+        "EV-005",
+        "EV-006"
+      ],
+      "rationale": "JSON Lines offers record-at-a-time framing; byte I/O avoids locale/newline rewriting. Preserve original matching record bytes, adding LF only when final matched line has no terminator.",
+      "alternatives": [
+        "General jq expression",
+        "Deserialize and reserialize every record"
+      ],
+      "complexity_cost": "One-record parsing and explicit flush after each match.",
+      "scale_fit": "One process, memory O(largest record), no accumulation.",
+      "revisit_trigger": "Revisit parser/runtime if measured throughput or record size exceeds operational bounds."
+    },
+    {
+      "id": "DEC-003",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "candidate": "Strict input with fail-fast safe diagnostics",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-001",
+        "EV-003",
+        "EV-004"
+      ],
+      "rationale": "Reject blank/invalid UTF-8/BOM/syntax/nonstandard numeric constants; duplicate keys rejected by hook to avoid ambiguous match. Valid non-object JSON is a nonmatch. Catch parser ValueError/RecursionError as record failures.",
+      "alternatives": [
+        "Skip invalid records silently",
+        "Collect every error before exit"
+      ],
+      "complexity_cost": "Explicit decoder hooks, global line count, safe diagnostics.",
+      "scale_fit": "Logs may contain sensitive content; do not echo raw record. Previously emitted matches remain on failure.",
+      "revisit_trigger": "Add explicit continue mode only if operators ask for partial recovery and metrics."
+    },
+    {
+      "id": "DEC-004",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006"
+      ],
+      "candidate": "Python 3.11+ single script, standard library only",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-003",
+        "EV-004",
+        "EV-005",
+        "EV-006"
+      ],
+      "rationale": "json.tool demonstrates standard-library local JSONL CLI primitives. The job needs no package graph under declared runtime assumption.",
+      "alternatives": [
+        "Use installed jq",
+        "Distribute a compiled binary"
+      ],
+      "complexity_cost": "Python runtime prerequisite; no installer or dependencies.",
+      "scale_fit": "Small local operator workflow; not zero-runtime installation.",
+      "revisit_trigger": "If operators lack Python or need signed binaries, revisit compiled distribution with research."
+    },
+    {
+      "id": "DEC-005",
+      "requirement_ids": [
+        "REQ-002",
+        "REQ-003",
+        "REQ-004",
+        "REQ-005"
+      ],
+      "candidate": "Use ordinary jq invocation as the whole product",
+      "outcome": "REJECT",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002"
+      ],
+      "rationale": "jq solves general filtering and offers a single binary, but ordinary input framing is whitespace-separated values and its expression UX is broader than the fixed literal-field job; strict physical-line diagnostics need more wrapper policy.",
+      "alternatives": [
+        "Direct one-script implementation"
+      ],
+      "complexity_cost": "Extra expression and wrapper contract despite excellent general tool.",
+      "scale_fit": "Strong option if jq is already installed and strict framing is unnecessary.",
+      "revisit_trigger": "Revisit if scope changes to general expressions or deployment forbids Python."
+    }
+  ],
+  "plan_units": [
+    {
+      "id": "STEP-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "decision_ids": [
+        "DEC-001"
+      ],
+      "outcome": "Hand off source-backed research and plan only.",
+      "acceptance_checks": [
+        "CHECK-002"
+      ]
+    },
+    {
+      "id": "STEP-002",
+      "requirement_ids": [
+        "REQ-002",
+        "REQ-003"
+      ],
+      "decision_ids": [
+        "DEC-002"
+      ],
+      "outcome": "Later implement literal-key, string-only matching and per-line byte streaming.",
+      "acceptance_checks": [
+        "CHECK-003"
+      ]
+    },
+    {
+      "id": "STEP-003",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "decision_ids": [
+        "DEC-003"
+      ],
+      "outcome": "Later implement strict errors, statuses and clean stderr.",
+      "acceptance_checks": [
+        "CHECK-004"
+      ]
+    },
+    {
+      "id": "STEP-004",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006"
+      ],
+      "decision_ids": [
+        "DEC-004"
+      ],
+      "outcome": "Later document and smoke-check one-script runtime-only installation.",
+      "acceptance_checks": [
+        "CHECK-005"
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "id": "CHECK-001",
+      "requirement_ids": [],
+      "decision_ids": [],
+      "required": true,
+      "result": "PASS",
+      "method": "SOURCE_AUDIT",
+      "criterion": "Original documented source headings support EV-001 through EV-005 and inference is labelled.",
+      "command": "",
+      "evidence_path": "checks/CHECK-001.txt",
+      "tested_snapshot": "inspected-source-notes-sha256:784fb311d8ff1f30f5c32b46b91bdd468e91b50b1683a50e6c970f6cdcf21de3",
+      "checked_at": "2026-09-30T19:53:52.746800+00:00"
+    },
+    {
+      "id": "CHECK-002",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "decision_ids": [
+        "DEC-001"
+      ],
+      "required": true,
+      "result": "PASS",
+      "method": "MANUAL",
+      "criterion": "Inspect bounded run tree and verify only research artifacts were written.",
+      "command": "",
+      "evidence_path": "checks/CHECK-002.txt",
+      "tested_snapshot": "research-only-bounded-tree-sha256:20958419eafeb0ae7250588825b9cc659c5db4f0f83402f01a83f15dc9e7d567",
+      "checked_at": "2026-09-30T19:55:35.207196+00:00"
+    },
+    {
+      "id": "CHECK-003",
+      "requirement_ids": [
+        "REQ-002",
+        "REQ-003"
+      ],
+      "decision_ids": [
+        "DEC-002"
+      ],
+      "required": true,
+      "result": "NOT_RUN",
+      "method": "MANUAL",
+      "criterion": "Later compare subprocess output byte-for-byte: string vs number/null/missing, dotted/empty/Unicode keys, exact case/whitespace, escaped values, valid nonobjects, LF/CRLF, final no-newline, and output visible while input remains open.",
+      "command": "",
+      "evidence_path": "",
+      "tested_snapshot": "",
+      "checked_at": ""
+    },
+    {
+      "id": "CHECK-004",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "decision_ids": [
+        "DEC-003"
+      ],
+      "required": true,
+      "result": "NOT_RUN",
+      "method": "MANUAL",
+      "criterion": "Later run invalid records at line 2: blank, bad UTF-8, BOM, bad syntax, NaN/Infinity, duplicate names, excessive depth/number; assert safe stderr line, no raw sensitive payload/traceback, exit 1, no processing of line 3. Argument error exit 2; I/O failure exit 1.",
+      "command": "",
+      "evidence_path": "",
+      "tested_snapshot": "",
+      "checked_at": ""
+    },
+    {
+      "id": "CHECK-005",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006"
+      ],
+      "decision_ids": [
+        "DEC-004"
+      ],
+      "required": true,
+      "result": "NOT_RUN",
+      "method": "MANUAL",
+      "criterion": "Later run on declared Python versions with no third-party site packages, help and empty stdin exit 0; inspect no network dependencies, document prerequisite and max-record memory limit.",
+      "command": "",
+      "evidence_path": "",
+      "tested_snapshot": "",
+      "checked_at": ""
+    }
+  ]
+}

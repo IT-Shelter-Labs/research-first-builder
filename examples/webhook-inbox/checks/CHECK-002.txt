@@ -1,0 +1,16 @@
+Actual run: Python 3.11.0, win32
+Command: python -m unittest discover -s . -p test_app.py -v
+Snapshot: files:sha256:1e962df56aaa751132cda94caa3dce9e136e6c10dcf96c6cbc6be377bdd11589
+Exit: 0
+
+test_boundary_validation (test_app.InboxTests.test_boundary_validation) ... ok
+test_conflicting_id_does_not_overwrite (test_app.InboxTests.test_conflicting_id_does_not_overwrite) ... ok
+test_duplicate_and_persistence (test_app.InboxTests.test_duplicate_and_persistence) ... ok
+test_invalid_json_and_bounds (test_app.InboxTests.test_invalid_json_and_bounds) ... ok
+test_signature_binds_body_id_and_timestamp (test_app.InboxTests.test_signature_binds_body_id_and_timestamp) ... ok
+test_time_window (test_app.InboxTests.test_time_window) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.050s
+
+OK

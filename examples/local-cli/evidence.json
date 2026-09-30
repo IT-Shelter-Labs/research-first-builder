@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "run_id": "local-cli",
+  "intent": "full",
+  "scope": {
+    "goal": "Build a literal JSON Lines filter",
+    "constraints": [
+      "Python stdlib",
+      "literal top-level string equality",
+      "65536 bytes per line",
+      "preserve matched bytes"
+    ],
+    "non_goals": [
+      "query DSL",
+      "regex",
+      "nested paths",
+      "plugin architecture",
+      "whole-input buffering"
+    ]
+  },
+  "coverage": {
+    "depth": "quick",
+    "reference_exception": "",
+    "rejection_note": "No substantive architecture pattern was rejected. A framework/DSL was excluded by the task, not introduced as a fabricated candidate; NO-PATTERN is the adopted outcome.",
+    "limitations": [
+      "Maintainer-authored walkthrough, not a controlled autonomous-host benchmark.",
+      "Primary sources inspected; reference projects not installed or executed."
+    ]
+  },
+  "questions": [
+    {
+      "question": "What is the smallest mechanism that meets this bounded task?",
+      "critical": true,
+      "status": "ANSWERED",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-003",
+        "EV-004"
+      ],
+      "resolution": "One original binary-line iterator plus argparse entrypoint. No additional architecture pattern is needed. The user requires no external binary dependency; jq remains a good option when that constraint changes."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "text": "Stream UTF-8 JSON Lines and preserve original matched bytes.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "TASK.md in this example",
+      "acceptance": "First match available before later input; final newline and formatting preserved.",
+      "critical": true
+    },
+    {
+      "id": "REQ-002",
+      "text": "Literal top-level string matching and clean input errors.",
+      "origin": "USER_REQUIREMENT",
+      "source_locator": "TASK.md in this example",
+      "acceptance": "No type coercion; malformed/duplicate-key/nonfinite/oversized lines fail with line number.",
+      "critical": true
+    }
+  ],
+  "references": [
+    {
+      "id": "REF-001",
+      "canonical_url": "https://github.com/jqlang/jq",
+      "relevance": "JSON CLI/error-handling mechanism",
+      "mismatch": "Much broader expression language",
+      "selection_rationale": "Inspected a concrete mechanism relevant to the task; no popularity score.",
+      "activity": {
+        "description": "Last repository push 2026-09-27T04:52:41Z; metadata read 2026-09-30.",
+        "source": "https://api.github.com/repos/jqlang/jq",
+        "checked_at": "2026-09-30T17:28:04.0827588Z"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "MIT; docs CC-BY-3.0",
+        "locator": "https://github.com/jqlang/jq/blob/9a75bb0d4318bb6f6509635d89319ff40ee9ecac/COPYING",
+        "scope": "Root license and relevant README/source scope; no source/text copied.",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    },
+    {
+      "id": "REF-002",
+      "canonical_url": "https://github.com/BurntSushi/ripgrep",
+      "relevance": "Line-oriented CLI contrast",
+      "mismatch": "Text patterns, not typed JSON fields",
+      "selection_rationale": "Inspected a concrete mechanism relevant to the task; no popularity score.",
+      "activity": {
+        "description": "Last repository push 2026-08-04T13:59:44Z; metadata read 2026-09-30.",
+        "source": "https://api.github.com/repos/BurntSushi/ripgrep",
+        "checked_at": "2026-09-30T17:28:15.0248239Z"
+      },
+      "license_record": {
+        "status": "INSPECTED",
+        "spdx": "MIT OR Unlicense",
+        "locator": "https://github.com/BurntSushi/ripgrep/blob/3fce3b5bb0236da2df6d99672afb8a719642eca7/LICENSE-MIT",
+        "scope": "Root license and relevant README/source scope; no source/text copied.",
+        "reuse_mode": "PATTERN_ONLY",
+        "code_copied": false,
+        "reuse_review": ""
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-001",
+      "reference_id": "REF-001",
+      "url": "https://github.com/jqlang/jq/blob/9a75bb0d4318bb6f6509635d89319ff40ee9ecac/README.md",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "9a75bb0d4318bb6f6509635d89319ff40ee9ecac",
+        "path": "README.md",
+        "location": "Opening description",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-001.md",
+      "limitations": []
+    },
+    {
+      "id": "SRC-002",
+      "reference_id": "REF-001",
+      "url": "https://github.com/jqlang/jq/blob/9a75bb0d4318bb6f6509635d89319ff40ee9ecac/src/main.c",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "IMPLEMENTATION",
+      "locator": {
+        "revision": "9a75bb0d4318bb6f6509635d89319ff40ee9ecac",
+        "path": "src/main.c",
+        "location": "Input loop / parse errors, lines 677-705",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-002.md",
+      "limitations": []
+    },
+    {
+      "id": "SRC-003",
+      "reference_id": "REF-002",
+      "url": "https://github.com/BurntSushi/ripgrep/blob/3fce3b5bb0236da2df6d99672afb8a719642eca7/README.md",
+      "accessed_at": "2026-09-30T20:14:57+00:00",
+      "kind": "DOCUMENTATION",
+      "locator": {
+        "revision": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+        "path": "README.md",
+        "location": "Opening description",
+        "version": "",
+        "publication_date": ""
+      },
+      "inspection_status": "INSPECTED",
+      "note_path": "sources/SRC-003.md",
+      "limitations": []
+    }
+  ],
+  "claims": [
+    {
+      "id": "EV-001",
+      "statement": "jq describes a general command-line JSON transformation tool.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-001"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "The opening describes filtering, mapping and transformation.",
+      "scope": "Documented capability, not a framing/performance guarantee.",
+      "limitations": []
+    },
+    {
+      "id": "EV-002",
+      "statement": "jq's inspected input loop reports parse errors and records a nonzero failure result.",
+      "class": "OPEN_SOURCE_IMPLEMENTATION",
+      "source_ids": [
+        "SRC-002"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "The input loop's parse-error branch sets JQ_ERROR_UNKNOWN and writes stderr.",
+      "scope": "Default non-sequence branch; our CLI has its own exit contract.",
+      "limitations": []
+    },
+    {
+      "id": "EV-003",
+      "statement": "ripgrep describes line-oriented pattern search.",
+      "class": "VERIFIED_SOURCE",
+      "source_ids": [
+        "SRC-003"
+      ],
+      "premise_claim_ids": [],
+      "requirement_ids": [],
+      "support_explanation": "The opening frames ripgrep around line-oriented text search.",
+      "scope": "Text-search job, not JSON field semantics.",
+      "limitations": []
+    },
+    {
+      "id": "EV-004",
+      "statement": "A direct stdlib line filter fits literal-field matching without a DSL.",
+      "class": "INFERENCE",
+      "source_ids": [],
+      "premise_claim_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-003"
+      ],
+      "requirement_ids": [],
+      "support_explanation": "The task needs one predicate and failure reporting, not a query language or text regex engine.",
+      "scope": "Our design judgment; tests verify actual framing and byte preservation.",
+      "limitations": []
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "candidate": "NO-PATTERN: direct Python stdlib filter",
+      "outcome": "ADOPT",
+      "evidence_ids": [
+        "EV-004"
+      ],
+      "rationale": "A bounded iterator and a literal predicate satisfy the whole task.",
+      "alternatives": [
+        "Wrap a jq binary"
+      ],
+      "complexity_cost": "One script, Python prerequisite",
+      "scale_fit": "Local line filter",
+      "revisit_trigger": "Actual demand for expressions/nested paths"
+    }
+  ],
+  "plan_units": [
+    {
+      "id": "STEP-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "decision_ids": [
+        "DEC-001"
+      ],
+      "outcome": "Build a literal JSON Lines filter",
+      "acceptance_checks": [
+        "CHECK-002"
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "id": "CHECK-001",
+      "requirement_ids": [],
+      "decision_ids": [],
+      "required": true,
+      "result": "PASS",
+      "method": "SOURCE_AUDIT",
+      "criterion": "Inspect primary support and scoped inference",
+      "command": "",
+      "evidence_path": "checks/CHECK-001.txt",
+      "tested_snapshot": "sources:local-cli",
+      "checked_at": "2026-09-30T20:14:57+00:00"
+    },
+    {
+      "id": "CHECK-002",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "decision_ids": [
+        "DEC-001"
+      ],
+      "required": true,
+      "result": "PASS",
+      "method": "COMMAND",
+      "criterion": "Lazy streaming, exact bytes/Unicode/newline, literal string-only matching, invalid-input diagnostics and CLI exit codes.",
+      "command": "python -m unittest discover -s . -p test_app.py -v",
+      "evidence_path": "checks/CHECK-002.txt",
+      "tested_snapshot": "files:sha256:1a7f44dd8c9a180f0d87c492055398078f11cfa8dae2dc1caa0e7ed94a1222a1",
+      "checked_at": "2026-09-30T20:46:23+00:00"
+    }
+  ]
+}

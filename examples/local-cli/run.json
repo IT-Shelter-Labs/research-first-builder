@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "run_id": "local-cli",
+  "stage": "COMPLETE",
+  "prebuild_receipt": {
+    "fingerprint": "b375e9ab23ca06009b818f9c026618c65c5f35ee21c95a79fe60f1a1bf37b2f4",
+    "checked_at": "2026-09-30T20:14:58+00:00"
+  },
+  "postbuild_receipt": {
+    "fingerprint": "b375e9ab23ca06009b818f9c026618c65c5f35ee21c95a79fe60f1a1bf37b2f4",
+    "checked_at": "2026-09-30T20:46:23+00:00",
+    "snapshot": "files:sha256:1a7f44dd8c9a180f0d87c492055398078f11cfa8dae2dc1caa0e7ed94a1222a1",
+    "evidence_hash": "fd42f2d26b1b96660274237a042f8355b66c724e2972950d60401ebb8e4631bb",
+    "check_outputs": {
+      "checks/CHECK-001.txt": "fc9e99fe20ab3566346162441cb084483161dcf71e0dfd4ec7651a343f265d4a",
+      "checks/CHECK-002.txt": "6be1c1ad5870bdd2c384279e7b063ea98242d6a2f6d02eea2f15338dc5e23805"
+    },
+    "verification_hash": "617b7a7e051458c70a148c2e6664d7428003aeb9e8c9e621beac8e4c16548667"
+  },
+  "rendered_at": "2026-09-30T20:46:23+00:00"
+}

@@ -1,0 +1,15 @@
+Actual run: Python 3.11.0, win32
+Command: python -m unittest discover -s . -p test_app.py -v
+Snapshot: files:sha256:2820c2116ea0cd1a60f14440dd8b5b55dabc30bc3692d72c7131a241a964ef32
+Exit: 0
+
+test_history_bounds (test_app.ChatTests.test_history_bounds) ... ok
+test_invalid_text_never_written (test_app.ChatTests.test_invalid_text_never_written) ... ok
+test_persistence (test_app.ChatTests.test_persistence) ... ok
+test_room_order_cursor_and_limit (test_app.ChatTests.test_room_order_cursor_and_limit) ... ok
+test_sql_like_text_preserved (test_app.ChatTests.test_sql_like_text_preserved) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.070s
+
+OK
