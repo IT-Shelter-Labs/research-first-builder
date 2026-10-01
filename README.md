@@ -5,6 +5,7 @@
 Don't build from vibes. Build from evidence.
 
 Research First Builder is one portable agent skill by [IT Shelter](https://github.com/IT-Shelter-Labs).
+Follow IT Shelter on [Telegram](https://t.me/+ihTcvubt-_BhZTQ6).
 It turns relevant software references into scoped **ADOPT / REJECT / DEFER** decisions, a minimal plan,
 and verification linked back to those decisions. An offline helper checks the artifact contract.
 
@@ -66,8 +67,8 @@ Change `codex` to `claude-code`, `cursor` or `opencode`. Review the installer's 
 Manual copying needs no Node. Python **3.11+** is required for deterministic checks; the agent needs primary-source
 access and local file tools. Without Python, a labelled manual review is possible, without deterministic readiness.
 
-This candidate is prepared for `IT-Shelter-Labs/research-first-builder`; the remote GitHub installation route is
-not advertised as live until the repository is published. [Installation details and host docs](docs/QUICKSTART.md).
+Source repository: [IT-Shelter-Labs/research-first-builder](https://github.com/IT-Shelter-Labs/research-first-builder).
+[Installation details and host docs](docs/QUICKSTART.md).
 
 ## Ask your agent
 
@@ -141,7 +142,8 @@ python tools/check_repository.py
 ```
 
 Example verification runs real tests and checks the recorded plan against current file fingerprints.
-It does not silently refresh receipts. CI is configured for Windows/Linux; a hosted CI result is still pending publication.
+It does not silently refresh receipts. CI is configured for Windows/Linux; see the actual
+[GitHub Actions results](https://github.com/IT-Shelter-Labs/research-first-builder/actions/workflows/check.yml).
 
 [Contributing](CONTRIBUTING.md) · [Evaluation method and observed results](evals/README.md) ·
 [Roadmap](docs/ROADMAP.md) · [Changelog](CHANGELOG.md) · [MIT license](LICENSE)

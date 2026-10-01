@@ -1,7 +1,8 @@
 # Local release readiness
 
-Version 0.1.0 candidate, 2026-10-01. Organization: IT-Shelter-Labs. No public repository, tag, package or
-release was created by this implementation. The user selected [melroncod](https://github.com/melroncod)
+Version 0.1.0 candidate, 2026-10-01. Organization: IT-Shelter-Labs. The user pushed the source repository
+to GitHub; origin/main was inspected. Public visibility and hosted CI results have not yet been verified.
+No tag or release was created by this implementation. The user selected [melroncod](https://github.com/melroncod)
 for commit authorship; repository-specific ID-based noreply identity preserves the private mailbox.
 [Concrete publication guide](PUBLISHING.md) and preview release notes are prepared.
 
@@ -16,16 +17,16 @@ for commit authorship; repository-specific ID-based noreply identity preserves t
 | M6 Primary native acceptance | Desktop full workflow passed by explicit skill-file invocation; native selector discovery pending in correct project context. Claude auth and nested CLI policy blocked prior full runs |
 | M7 Examples/demo | Three original genuine-source builds plus independent handoff; reproducible edited artifact animation |
 | M8 Comparison/pilot | Method/cases/rubric prepared; paired runs and consenting external pilot not executed |
-| M9 Public package | English/Russian README, MIT, contribution/security docs, offline CI configuration and clean archive; hosted CI/publication pending |
+| M9 Public package | English/Russian README, MIT, contribution/security docs and clean archive; source pushed to GitHub, public visibility/hosted CI/remote install verification pending |
 
 ## Concrete launch checks remaining
 
 - Complete native discovery in the actual desktop target project and native acceptance in other primary hosts. [Desktop full-workflow report](acceptance/DESKTOP_BOOKMARKS.md) preserves what already passed.
-- Execute hosted Windows/Linux CI after repository setup; configured YAML is not a green run.
+- Inspect hosted Windows/Linux CI after repository setup; configured YAML is not a green run.
 - Declare evaluation budget and run a comparison/pilot before making measured benefit claims.
-- Author profile was selected by the user. Review final file/history privacy and organization settings before the public push.
+- Author profile was selected by the user. Review repository visibility and organization settings for the public preview.
 - Enable an actual private vulnerability reporting route; avoid claiming a nonexistent contact.
-- Confirm publication authorization, then create the public repository and immutable version/tag; verify the remote installation command from a clean target project before adding it as the primary route.
+- Confirm public access, create the preview version/tag, and verify the remote installation command from a clean target project before adding it as the primary route.
 
 The candidate is useful for local testing now. The incomplete gates do not turn local verification into stable
 native-host certification. RepoLens was not implemented.

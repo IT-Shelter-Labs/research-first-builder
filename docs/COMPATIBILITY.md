@@ -25,7 +25,7 @@ change global permissions or replace user configuration to force a pass.
 - One real desktop full task with primary analogue research, prebuild before app code, implementation and actual checks. [Acceptance report and limits](acceptance/DESKTOP_BOOKMARKS.md).
 
 See [evaluation observations](../evals/README.md) and linked example receipts. Hosted Windows/Linux CI is
-configured, not yet executed on a public repository. Cross-host availability depends on the host's model,
+configured; hosted run results have not yet been inspected. Cross-host availability depends on the host's model,
 file-tool and source-access settings; installation success alone cannot prove those capabilities.
 
 ## Native acceptance to complete

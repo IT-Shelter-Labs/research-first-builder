@@ -6,6 +6,7 @@ Don't build from vibes. Build from evidence.
 
 Проект [IT Shelter](https://github.com/IT-Shelter-Labs). Один переносимый скилл и небольшой Python helper
 без сторонних библиотек, серверов и аккаунта RFB.
+Канал IT Shelter в [Telegram](https://t.me/+ihTcvubt-_BhZTQ6).
 
 Агент изучает подходящие аналоги, фиксирует доказательства, принимает **ADOPT / REJECT / DEFER** решения,
 создаёт минимальный план, реализует его и сохраняет реальные результаты проверок.
@@ -59,6 +60,7 @@ python tools/verify_examples.py
 python tools/check_repository.py
 ```
 
-Репозиторий подготовлен для `IT-Shelter-Labs/research-first-builder`; публичная публикация ещё не выполнена.
+Исходники опубликованы на [GitHub](https://github.com/IT-Shelter-Labs/research-first-builder).
+Фактические результаты автоматических проверок смотрите в [GitHub Actions](https://github.com/IT-Shelter-Labs/research-first-builder/actions/workflows/check.yml).
 MIT покрывает наш оригинальный код и материалы. Лицензии изученных проектов записаны отдельно;
 их код не переносился. [Установка](docs/QUICKSTART.md) · [Ограничения](docs/CONTRACT.md).
