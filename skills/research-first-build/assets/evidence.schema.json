@@ -744,6 +744,11 @@
     "question": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^Q-[0-9]{3,}$",
+          "description": "Stable question ID for new runs; optional for existing schema-version-1 ledgers."
+        },
         "question": {
           "type": "string",
           "maxLength": 8000,

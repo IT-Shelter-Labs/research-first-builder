@@ -24,7 +24,7 @@ keys and nonfinite JSON constants fail. CRLF is normalized for text freshness ch
 
 ## Records and trace
 
-REQ identifies a requirement with USER_REQUIREMENT/ASSUMPTION origin; REF a relevant reference;
+Q identifies a research question (optional in older version-1 ledgers); REQ a requirement with USER_REQUIREMENT/ASSUMPTION origin; REF a relevant reference;
 SRC an inspected location; EV a classified claim; DEC a scoped decision; STEP planned work; CHECK verification.
 IDs are stable within a run. Broken links, duplicate IDs, inference cycles, adopted orphan decisions,
 rejected/deferred planned work, and required acceptance omissions fail.
@@ -44,8 +44,15 @@ SOURCE_REUSE requires inspected rights and a recorded review; the checker cannot
 ## Freshness and snapshots
 
 Prebuild fingerprints planning records, research/plan prose, source notes and source-audit receipts.
-Actual build results can be appended without rewriting the approved plan. Changed decisions require review
-and a fresh prebuild check. Rendering clears the postbuild receipt; rendering is not verification.
+Actual build results can be appended without rewriting the approved plan. Any edit to RESEARCH.md or PLAN.md,
+including a prose-only typo correction, changes the fingerprint and requires review and a fresh prebuild check.
+Rendering clears the postbuild receipt; rendering is not verification.
+
+New postbuild cache records contain only a planning fingerprint, check timestamp and implementation snapshot.
+Older caches may also contain `evidence_hash`, `verification_hash` and `check_outputs`; these were unused audit
+metadata, not enforced integrity guarantees. They remain readable and are omitted when a successful check renews
+the receipt. Each fresh check reads the current ledger, reports and required evidence files; a cached COMPLETE
+stage cannot override a failure. The helper does not prove that saved transcripts are authentic.
 
 The host supplies a current snapshot covering implementation plus uncommitted/untracked files where relevant.
 Required implementation receipts must use that same snapshot; source audits retain their source-set snapshot.

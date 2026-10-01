@@ -29,7 +29,50 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(status, 0, output)
         state = json.loads((self.root / "run.json").read_text())
         self.assertEqual(state["stage"], "COMPLETE")
-        self.assertIn("check_outputs", state["postbuild_receipt"])
+        self.assertEqual(state["postbuild_receipt"]["snapshot"], "files:synthetic-v1")
+
+    def test_question_ids_diagnose_links_answers_and_duplicates(self):
+        second = copy.deepcopy(self.data["questions"][0])
+        second.update(id="Q-002", evidence_ids=[], resolution="")
+        self.data["questions"].append(second)
+        self.assertIn("Q-002: ANSWERED", self.errors())
+        second.update(evidence_ids=["EV-999"], resolution="Unsupported answer")
+        self.assertIn("Q-002.evidence_ids: unknown EV-999", self.errors())
+        second["evidence_ids"] = ["EV-001"]
+        self.assertEqual(self.errors(), "")
+        self.data["questions"][0]["id"] = "Q-002"
+        self.assertIn("duplicate ID Q-002", self.errors())
+        second["id"] = "not-a-question-id"
+        self.assertIn("invalid identifier", self.errors())
+
+    def test_legacy_questions_remain_valid_with_indexed_diagnostics(self):
+        self.assertNotIn("id", self.data["questions"][0])
+        self.assertEqual(self.errors(), "")
+        self.data["questions"][0]["evidence_ids"] = []
+        self.assertIn("questions[0]: ANSWERED", self.errors())
+        self.data["questions"][0]["evidence_ids"] = ["EV-999"]
+        self.assertIn("questions[0].evidence_ids: unknown EV-999", self.errors())
+
+    def test_old_postbuild_cache_cannot_override_current_failure(self):
+        cli("check", self.root, "--stage", "prebuild")
+        finish(self.root, self.data)
+        args = ("check", self.root, "--stage", "postbuild", "--snapshot", "files:synthetic-v1")
+        self.assertEqual(cli(*args)[0], 0)
+        state = json.loads((self.root / "run.json").read_text())
+        state["postbuild_receipt"].update(
+            evidence_hash="legacy audit metadata", verification_hash="legacy", check_outputs={}
+        )
+        (self.root / "run.json").write_text(json.dumps(state))
+        self.data["verification"][1]["result"] = "FAIL"
+        save(self.root, self.data)
+        status, output = cli(*args)
+        self.assertEqual(status, 1)
+        self.assertIn("not PASS", output)
+        self.data["verification"][1]["result"] = "PASS"
+        save(self.root, self.data)
+        self.assertEqual(cli(*args)[0], 0)
+        receipt = json.loads((self.root / "run.json").read_text())["postbuild_receipt"]
+        self.assertEqual(set(receipt), {"fingerprint", "checked_at", "snapshot"})
 
     def test_missing_duplicate_and_broken_ids(self):
         cases = [
@@ -169,12 +212,14 @@ class ContractTests(unittest.TestCase):
         self.assertIn("NOT_RUN cannot", self.errors())
 
     def test_critical_unknown_blocks_prebuild(self):
+        self.data["questions"][0]["id"] = "Q-001"
         self.data["questions"][0]["status"] = "OPEN"
         save(self.root, self.data)
         cli("render", self.root)
         status, output = cli("check", self.root, "--stage", "prebuild")
         self.assertEqual(status, 1)
         self.assertIn("Critical research question", output)
+        self.assertIn("Q-001", output)
 
     def test_a_failed_required_audit_blocks_even_when_another_passes(self):
         audit = copy.deepcopy(self.data["verification"][0])

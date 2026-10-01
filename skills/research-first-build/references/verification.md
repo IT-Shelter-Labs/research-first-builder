@@ -9,9 +9,11 @@ Save the source audit: inspect the original supporting locations for consequenti
 Declare it as a required SOURCE_AUDIT CHECK with an actual PASS/FAIL, source-set snapshot and timestamp. Prebuild requires passing required source audits, resolved critical questions, readable reports, valid trace and current managed tables.
 
 ~~~text
-python "<installed-skill>/scripts/rfb.py" render "<run-dir>"
-python "<installed-skill>/scripts/rfb.py" check "<run-dir>" --stage prebuild
+python "<skill-dir>/scripts/rfb.py" render "<run-dir>"
+python "<skill-dir>/scripts/rfb.py" check "<run-dir>" --stage prebuild
 ~~~
+
+Any edit to RESEARCH.md or PLAN.md, including prose-only corrections, invalidates the prebuild fingerprint. Finish prose edits before prebuild where possible; after later edits, review, render and recheck prebuild before postbuild.
 
 This writes a prebuild receipt in run.json. It is a freshness cache; never use a cached stage as authorization or skip rechecking on resume.
 
@@ -34,8 +36,8 @@ The host gathers an actual current implementation snapshot. Use Git revision plu
 The helper accepts the snapshot identifier through `--snapshot`, compares it with receipts, and does not read arbitrary implementation paths or run git. A forged identifier/transcript can fool structural checks. Record provenance honestly and review it separately.
 
 ~~~text
-python "<installed-skill>/scripts/rfb.py" render "<run-dir>"
-python "<installed-skill>/scripts/rfb.py" check "<run-dir>" --stage postbuild --snapshot "<actual-current-snapshot>"
+python "<skill-dir>/scripts/rfb.py" render "<run-dir>"
+python "<skill-dir>/scripts/rfb.py" check "<run-dir>" --stage postbuild --snapshot "<actual-current-snapshot>"
 ~~~
 
 Required checks must PASS on that snapshot, except SOURCE_AUDIT checks tied to the researched source set. Rendered tables must match. The prebuild fingerprint must still match research/plan/source inputs.

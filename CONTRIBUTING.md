@@ -19,6 +19,11 @@ Keep one self-contained skill folder. Update schema, checker, templates and docs
 Unknown schema versions should fail with artifacts intact. The helper must not fetch sources, run ledger commands,
 grant permission or imply factual truth. Document any new prerequisite before introducing it.
 
+Skill frontmatter follows the [Agent Skills specification](https://agentskills.io/specification), including its
+standard `compatibility` field for environment requirements. For format validation, use the current official
+[skills-ref reference validator](https://github.com/agentskills/agentskills/tree/main/skills-ref); older validators
+may reject supported optional fields. Its development dependencies are separate from the standalone skill runtime.
+
 A useful issue includes task, host/version, relevant redacted artifacts, expected/actual behavior and reproducible
 steps. A useful PR explains the concrete trigger, resulting behavior and actual validation. Use meaningful regression
 tests for behavior/contract changes, not assertions on prose formatting. Ordinary documentation edits need link review.

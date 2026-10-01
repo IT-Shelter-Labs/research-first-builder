@@ -2,7 +2,7 @@
 
 ## Install the complete folder
 
-Use the root README's local-copy route. The installed folder must contain SKILL.md, LICENSE, agents,
+Use the root README's GitHub install or local-copy route. The installed folder must contain SKILL.md, LICENSE, agents,
 references, assets and scripts; copying just SKILL.md breaks progressive resources and offline checks.
 Keep your existing skills/configuration. Install once in a fresh target project or inspect any existing same-name
 installation before updating it. No global hooks, MCP configuration or permission overrides are needed.
@@ -56,9 +56,18 @@ Treat its findings as scoped evidence, not reusable facts about your own task.
 ## Continue to build
 
 After reviewing the handoff, ask the same agent to continue the existing run and build its plan.
-It should recheck drift, execute actual acceptance checks and record their current implementation snapshot.
+It should change the ledger's intent from `research-only` to `full` under that authorization, review/recheck
+prebuild, execute actual acceptance checks and record their current implementation snapshot.
 When it was already authorized to build a full task, it continues without unnecessary approval rounds.
 Publishing/deployment still needs whatever authorization your project requires.
+
+`resume` means continue an existing run, not a value for `init --intent`. Verify checks an existing ledger
+without changing its intent. New runs can be initialized as `full` or `research-only`.
+
+Before changing a completed report, note that **any edit to RESEARCH.md or PLAN.md, even a typo, invalidates
+the prebuild fingerprint**. Finish prose edits before prebuild where possible. After later edits, review the
+changes, render, check prebuild again and repeat postbuild against the actual current implementation snapshot.
+Re-run behavior tests if implementation changed; a prose correction alone does not require rebuilding the app.
 
 ## Common failures
 
@@ -69,6 +78,7 @@ Publishing/deployment still needs whatever authorization your project requires.
 | Python missing | Let the agent perform a labelled manual review; deterministic helper checks require Python 3.11+. |
 | No usable primary-source access | Preserve partial findings and explain missing evidence; do not replace inspection with remembered claims. |
 | `init` refuses a directory | Existing files are preserved. Resume the run or choose a new task slug. |
+| Ledger is still a template | Fill evidence.json with actual inspected findings before render/check; init does no research. |
 | Managed blocks stale | Edit canonical evidence.json; render, inspect reports, then recheck. Preserve prose outside markers. |
 | Prebuild receipt stale | Review changed research/plan/audit inputs; only then run a new prebuild check. |
 | Postbuild says required check NOT_RUN | Execute it or report an incomplete/blocked build. Do not change the label to get a green result. |

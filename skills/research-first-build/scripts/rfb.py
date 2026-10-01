@@ -368,12 +368,18 @@ def contract(data: dict, root: Path) -> list[str]:
                 errors.append(f"{check['id']}: NOT_RUN cannot have an execution receipt")
         elif check["evidence_path"]:
             exists(check["evidence_path"], check["id"], "checks")
-    for question in data["questions"]:
-        link(question, "evidence_ids", "claims")
+    question_ids = set()
+    for position, question in enumerate(data["questions"]):
+        label = question.get("id", f"questions[{position}]")
+        if "id" in question:
+            if label in question_ids:
+                errors.append(f"questions: duplicate ID {label}")
+            question_ids.add(label)
+        link({**question, "id": label}, "evidence_ids", "claims")
         if question["status"] == "ANSWERED" and not (
             question["evidence_ids"] and question["resolution"].strip()
         ):
-            errors.append("question: ANSWERED needs linked evidence and resolution")
+            errors.append(f"{label}: ANSWERED needs linked evidence and resolution")
     for req_id in ix["requirements"]:
         if not any(req_id in d["requirement_ids"] for d in data["decisions"]):
             errors.append(f"{req_id}: no linked decision")
@@ -658,9 +664,10 @@ def check_run(root: Path, data: dict, stage: str, snapshot: str = "") -> list[st
             errors.append(f"{filename}: managed blocks are stale; run render")
     if stage == "contract":
         return errors
-    for question in data["questions"]:
+    for position, question in enumerate(data["questions"]):
         if question["critical"] and question["status"] == "OPEN":
-            errors.append(f"Critical research question is open: {question['question']}")
+            label = question.get("id", f"questions[{position}]")
+            errors.append(f"Critical research question {label} is open: {question['question']}")
     audits = [c for c in data["verification"] if c["method"] == "SOURCE_AUDIT" and c["required"]]
     if not audits or any(c["result"] != "PASS" for c in audits):
         errors.append("Prebuild needs a required PASS source audit with saved inspection notes")
@@ -758,6 +765,14 @@ def main(argv: list[str] | None = None) -> int:
             raise ContractError("Run directory does not exist")
         data = load_json(safe_path(root, "evidence.json"))
         problems = contract(data, root)
+        if problems and isinstance(data, dict) and data.get("intent") in ("full", "research-only"):
+            template = load_json(SKILL_ROOT / "assets" / "evidence.template.json")
+            template.update(run_id=data.get("run_id"), intent=data.get("intent"))
+            if data == template:
+                problems = [
+                    "Ledger is still a template; fill evidence.json first. "
+                    "Record actual scope, inspected sources, decisions and checks before render/check."
+                ]
         if args.command == "render":
             if problems:
                 raise ContractError("\n".join(problems))
@@ -779,7 +794,7 @@ def main(argv: list[str] | None = None) -> int:
             atomic_write(root, "run.json", json.dumps(state, indent=2, ensure_ascii=False) + "\n")
             print("Rendered managed tables; narrative preserved. No checks were executed.")
             return 0
-        problems = check_run(root, data, args.stage, args.snapshot)
+        problems = problems or check_run(root, data, args.stage, args.snapshot)
         if not problems and args.stage in ("prebuild", "postbuild"):
             state = read_run(root, data)
             receipt = {"fingerprint": planning_fingerprint(root, data), "checked_at": utc_now()}
@@ -788,19 +803,7 @@ def main(argv: list[str] | None = None) -> int:
                 state["postbuild_receipt"] = None
                 state["stage"] = "PREBUILD_CHECKED"
             else:
-                check_hashes = {
-                    c["evidence_path"]: digest(read_text(safe_path(root, c["evidence_path"])))
-                    for c in data["verification"]
-                    if c["evidence_path"]
-                }
-                receipt.update(
-                    {
-                        "snapshot": args.snapshot,
-                        "evidence_hash": digest(canonical(data)),
-                        "check_outputs": check_hashes,
-                        "verification_hash": digest(read_text(safe_path(root, "VERIFICATION.md"))),
-                    }
-                )
+                receipt["snapshot"] = args.snapshot
                 state["postbuild_receipt"] = receipt
                 state["stage"] = "COMPLETE"
             atomic_write(root, "run.json", json.dumps(state, indent=2, ensure_ascii=False) + "\n")

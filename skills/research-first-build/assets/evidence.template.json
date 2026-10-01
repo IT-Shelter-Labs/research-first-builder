@@ -13,7 +13,16 @@
     "rejection_note": "",
     "limitations": []
   },
-  "questions": [],
+  "questions": [
+    {
+      "id": "Q-001",
+      "question": "",
+      "critical": true,
+      "status": "OPEN",
+      "evidence_ids": [],
+      "resolution": ""
+    }
+  ],
   "requirements": [
     {
       "id": "REQ-001",

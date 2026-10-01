@@ -14,7 +14,7 @@ Default run directory: `docs/research-first/<task-slug>/`.
 
 All record paths are relative, use `/`, and stay below `sources/` or `checks/`. No symlinks, traversal, absolute paths or credentials in URLs. The helper has a 2 MiB per-file limit; trim oversized output to relevant lines and explain the truncation.
 
-IDs are stable, e.g. REQ-001, REF-001, SRC-001, EV-001, DEC-001, STEP-001, CHECK-001. Do not renumber after deleting a record or reuse a removed ID.
+IDs are stable, e.g. Q-001, REQ-001, REF-001, SRC-001, EV-001, DEC-001, STEP-001, CHECK-001. Do not renumber after deleting a record or reuse a removed ID.
 
 ## Records and trace
 
@@ -28,7 +28,9 @@ IDs are stable, e.g. REQ-001, REF-001, SRC-001, EV-001, DEC-001, STEP-001, CHECK
 | plan_units | Requirement/adopted-decision IDs; incremental outcome; acceptance CHECK IDs |
 | verification | Criterion/method; requirement/decision links; required flag; outcome and actual receipt |
 
-`scope` stores goal/constraints/non-goals. `coverage` stores depth, reference-count exception, reason for no substantive rejection, and limitations. `questions` stores critical/open questions; ANSWERED needs linked evidence and a resolution.
+`scope` stores goal/constraints/non-goals. `coverage` stores depth, reference-count exception, reason for no substantive rejection, and limitations. `questions` stores critical/open questions; give new questions a unique `id` such as Q-001. ANSWERED needs linked evidence and a resolution. Existing schema-version-1 questions without IDs remain supported; their errors use a zero-based array index such as `questions[0]`.
+
+The ledger's `intent` is `full`, `research-only` or `verify`. `init --intent` starts full/research-only work. Resume continues an existing run; it is not an intent value. Verify checks the existing ledger without replacing its intent or inventing research. When a research-only handoff is authorized for implementation, explicitly change its intent to `full`, review the changed plan and recheck prebuild.
 
 Declare planned CHECKs with NOT_RUN and empty `evidence_path`, `tested_snapshot`, `checked_at`. For actual PASS or FAIL these fields must be filled. Manual/source/diff reviews are valid checks: save what was inspected, the result, and scope, not an invented command transcript.
 

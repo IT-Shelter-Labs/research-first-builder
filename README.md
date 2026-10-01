@@ -6,42 +6,25 @@
 
 Don't build from vibes. Build from evidence.
 
-Research First Builder is one portable agent skill by [IT Shelter](https://github.com/IT-Shelter-Labs).
-Follow IT Shelter on [Telegram](https://t.me/+ihTcvubt-_BhZTQ6).
-It turns relevant software references into scoped **ADOPT / REJECT / DEFER** decisions, a minimal plan,
-and verification linked back to those decisions. An offline helper checks the artifact contract.
+Research First Builder is a portable agent skill by [IT Shelter](https://github.com/IT-Shelter-Labs).
+It turns real software references into **ADOPT / REJECT / DEFER** decisions, a minimal plan and linked verification.
+The repository is `research-first-builder`; invoke the skill as **`research-first-build`**. `rfb.py` is its offline helper.
 
-**0.1.0 release candidate:** working local package, examples and a [desktop full-workflow test](docs/acceptance/DESKTOP_BOOKMARKS.md).
-Native selector acceptance and comparative evaluation remain incomplete. See [actual test status](docs/COMPATIBILITY.md).
+**Preview:** [release and validation status](docs/RELEASE_STATUS.md).
 [Русский](README_RU.md) · [Quick start](docs/QUICKSTART.md) · [Examples](examples/README.md)
 
-![A walkthrough of actual recorded decisions and checks](media/demo.gif)
+## Ask your agent
 
-The animation is an edited artifact walkthrough of the included team-chat example, not an agent-session recording.
+Codex:
 
-## Why use it?
+```text
+$research-first-build Research and build a webhook inbox for one local process.
+Keep dependencies minimal. Inspect relevant real projects first, explain what
+you reject, and verify the implemented plan. Use docs/research-first/inbox.
+```
 
-Research alone is cheap. Deciding which parts of a reference fit **your** task is harder.
-
-- Sources have inspectable locations, timestamps and limits; documented facts, inspected code, observations and inferences stay distinct.
-- Every consequential decision names its requirement, evidence, simpler alternative, complexity cost and revisit trigger.
-- Rejected complexity receives a post-build diff review. **NO-PATTERN** is a valid result.
-- Human reports and a single JSON ledger stay connected; checks catch broken trace, stale planning and inconsistent test snapshots.
-- One self-contained skill folder works with local agent tools. No RFB account, backend, MCP server or paid RFB API.
-
-Use it for a new project or a substantial subsystem with consequential design choices. A routine bug fix does not need a research ceremony.
-
-## See a concrete decision
-
-For a small team-chat storage core, the [recorded research](examples/team-chat/RESEARCH.md) inspected Zulip,
-Tinode and hack.chat. It adopted durable, room-scoped history, adapted it to local SQLite, rejected disappearing
-retention and federation, and deferred push/queue infrastructure. SQLite is an **inference for this bounded task**,
-not a claim about those projects' stacks. [Behavior tests and review receipts](examples/team-chat/VERIFICATION.md)
-verify the original educational implementation.
-
-Other examples cover a [signed webhook inbox](examples/webhook-inbox/RESEARCH.md), a
-[direct-code JSON Lines CLI](examples/local-cli/RESEARCH.md), and an
-[independent research-only handoff](examples/research-only/PROVENANCE.md).
+Claude Code: start with `/research-first-build` and the same task. For any host, explicitly asking it to use
+`research-first-build` is sufficient when its skill tool exposes that skill.
 
 ## Install
 
@@ -83,18 +66,35 @@ access and local file tools. Without Python, a labelled manual review is possibl
 Source repository: [IT-Shelter-Labs/research-first-builder](https://github.com/IT-Shelter-Labs/research-first-builder).
 [Installation details and host docs](docs/QUICKSTART.md).
 
-## Ask your agent
+![A walkthrough of actual recorded decisions and checks](media/demo.gif)
 
-Codex:
+The animation is an edited artifact walkthrough of the included team-chat example, not an agent-session recording.
 
-```text
-$research-first-build Research and build a webhook inbox for one local process.
-Keep dependencies minimal. Inspect relevant real projects first, explain what
-you reject, and verify the implemented plan. Use docs/research-first/inbox.
-```
+## Why use it?
 
-Claude Code: start with `/research-first-build` and the same task. For any host, explicitly asking it to use
-`research-first-build` is sufficient when its skill tool exposes that skill.
+Research alone is cheap. Deciding which parts of a reference fit **your** task is harder.
+
+- Sources have inspectable locations, timestamps and limits; documented facts, inspected code, observations and inferences stay distinct.
+- Every consequential decision names its requirement, evidence, simpler alternative, complexity cost and revisit trigger.
+- Rejected complexity receives a post-build diff review. **NO-PATTERN** is a valid result.
+- Human reports and a single JSON ledger stay connected; checks catch broken trace, stale planning and inconsistent test snapshots.
+- One self-contained skill folder works with local agent tools. No RFB account, backend, MCP server or paid RFB API.
+
+Use it for a new project or a substantial subsystem with consequential design choices. A routine bug fix does not need a research ceremony.
+
+## See a concrete decision
+
+For a small team-chat storage core, the [recorded research](examples/team-chat/RESEARCH.md) inspected Zulip,
+Tinode and hack.chat. It adopted durable, room-scoped history, adapted it to local SQLite, rejected disappearing
+retention and federation, and deferred push/queue infrastructure. SQLite is an **inference for this bounded task**,
+not a claim about those projects' stacks. [Behavior tests and review receipts](examples/team-chat/VERIFICATION.md)
+verify the original educational implementation.
+
+Other examples cover a [signed webhook inbox](examples/webhook-inbox/RESEARCH.md), a
+[direct-code JSON Lines CLI](examples/local-cli/RESEARCH.md), and an
+[independent research-only handoff](examples/research-only/PROVENANCE.md).
+
+## Research-only and depth
 
 For a plan before code:
 
@@ -123,10 +123,15 @@ docs/research-first/<task>/
 The agent can start an empty run with the bundled helper:
 
 ```text
-python "<installed-skill>/scripts/rfb.py" init "docs/research-first/inbox"
-python "<installed-skill>/scripts/rfb.py" render "docs/research-first/inbox"
-python "<installed-skill>/scripts/rfb.py" check "docs/research-first/inbox" --stage prebuild
-python "<installed-skill>/scripts/rfb.py" check "docs/research-first/inbox" --stage postbuild --snapshot "<actual-current-snapshot>"
+python "<skill-dir>/scripts/rfb.py" init "docs/research-first/inbox"
+```
+
+Fill `evidence.json` with actual inspected findings before continuing:
+
+```text
+python "<skill-dir>/scripts/rfb.py" render "docs/research-first/inbox"
+python "<skill-dir>/scripts/rfb.py" check "docs/research-first/inbox" --stage prebuild
+python "<skill-dir>/scripts/rfb.py" check "docs/research-first/inbox" --stage postbuild --snapshot "<actual-current-snapshot>"
 ```
 
 `init` creates deliberately incomplete templates. `render` updates managed tables and preserves prose.
@@ -135,6 +140,10 @@ builds the application, executes acceptance checks, and supplies the current imp
 [Contract and failure semantics](docs/CONTRACT.md).
 
 ## Honest boundaries
+
+The published 0.1.0-rc1 preview includes working examples and a [desktop full-workflow test](docs/acceptance/DESKTOP_BOOKMARKS.md).
+Native selector acceptance and comparative evaluation remain incomplete; see [actual host status](docs/COMPATIBILITY.md).
+Main includes later fixes; the published rc1 archives preserve their original snapshot.
 
 `CONTRACT_CHECKED` means recorded consistency passed. It does not prove source truth, license clearance,
 execution provenance or authorization. A fabricated receipt can fool structural validation. The skill is a workflow,
@@ -159,4 +168,5 @@ It does not silently refresh receipts. CI is configured for Windows/Linux; see t
 [GitHub Actions results](https://github.com/IT-Shelter-Labs/research-first-builder/actions/workflows/check.yml).
 
 [Contributing](CONTRIBUTING.md) · [Evaluation method and observed results](evals/README.md) ·
-[Roadmap](docs/ROADMAP.md) · [Changelog](CHANGELOG.md) · [MIT license](LICENSE)
+[Roadmap](docs/ROADMAP.md) · [Changelog](CHANGELOG.md) · [MIT license](LICENSE) ·
+[IT Shelter on Telegram](https://t.me/+ihTcvubt-_BhZTQ6)

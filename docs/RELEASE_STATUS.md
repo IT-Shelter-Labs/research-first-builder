@@ -1,25 +1,23 @@
 # Release readiness
 
-Version 0.1.0 candidate, 2026-10-01. Organization: IT-Shelter-Labs. The repository is public and the user
-published [v0.1.0-rc1](https://github.com/IT-Shelter-Labs/research-first-builder/releases/tag/v0.1.0-rc1) with two archives and SHA256SUMS.
-[Hosted CI passed on 60977ec](https://github.com/IT-Shelter-Labs/research-first-builder/actions/runs/36797869484).
+Recorded 2026-10-01. The public [v0.1.0-rc1 preview](https://github.com/IT-Shelter-Labs/research-first-builder/releases/tag/v0.1.0-rc1)
+includes the complete repository archive, a standalone skill archive and SHA256SUMS.
+[Hosted CI passed on e21efae](https://github.com/IT-Shelter-Labs/research-first-builder/actions/runs/36849930287).
 Anonymous GitHub installation and isolated helper init passed. Private vulnerability reporting is enabled.
-The user selected [melroncod](https://github.com/melroncod)
-for commit authorship; repository-specific ID-based noreply identity preserves the private mailbox.
-[Concrete publication guide](PUBLISHING.md) and preview release notes are prepared.
 
-| Milestone | Actual state |
+| Capability | Observed state |
 | --- | --- |
-| M0 Product contract | User authorized implementation of the prepared concept; working name retained |
-| M1 Installation/contract spike | Local four-target copy and isolated helper pass; native Codex discovery pass; native workflow limitations recorded |
-| M2 Research-only path | Independent actual primary-source run and handoff, no app edits |
-| M3 Offline helper | Meaningful contract/render/packaging regression suite passes locally |
-| M4 Evidence/failures | Five classes, scoped locators, license status, audit boundary, partial-source failure exercised |
-| M5 Build/verify/resume | Three educational builds plus actual desktop Bookmarks task; 55 HTTP assertions independently repeated; stale plan/source/snapshot and failed/not-run receipts covered by regression cases |
-| M6 Primary native acceptance | Desktop full workflow passed by explicit skill-file invocation; native selector discovery pending in correct project context. Claude auth and nested CLI policy blocked prior full runs |
-| M7 Examples/demo | Three original genuine-source builds plus independent handoff; reproducible edited artifact animation |
-| M8 Comparison/pilot | Method/cases/rubric prepared; paired runs and consenting external pilot not executed |
-| M9 Public package | Public repository and preview release; English/Russian docs, examples/demo, MIT, clean release archives, hosted CI success and anonymous install verified |
+| Product workflow | Research → Evidence → Evaluate → Reject/Adopt → Design → Plan → Build → Verify, in one portable skill |
+| Installation | Local four-target copy and anonymous GitHub install passed; complete standalone skill package |
+| Research-only | Independent primary-source run and handoff; no application implemented in that run |
+| Offline helper | Contract/render/packaging regression suite; no runtime dependencies beyond Python 3.11+ |
+| Evidence | Five source classes, scoped locators, license records and explicit audit boundaries |
+| Build and drift | Three educational builds and a desktop Bookmarks task; stale plan/source/snapshot and failed/not-run checks covered by regression tests |
+| Desktop acceptance | Full workflow passed by explicit skill-file invocation; 55 HTTP assertions independently repeated. Native selector discovery pending in the correct project context |
+| Other hosts | CLI discovery/install results and incomplete native workflow attempts documented in [compatibility status](COMPATIBILITY.md) |
+| Examples and demo | Three original genuine-source builds, an independent handoff and a reproducible edited artifact animation |
+| Comparison and pilot | Method/cases/rubric prepared; paired runs and external pilot not executed |
+| Public package | English/Russian docs, examples/demo, MIT, release archives and hosted CI |
 
 ## Stable-release and evaluation work remaining
 
@@ -28,4 +26,5 @@ for commit authorship; repository-specific ID-based noreply identity preserves t
 
 The preview is ready for an honest public announcement and feedback. The incomplete gates do not turn
 verification into stable native-host certification. Published v0.1.0-rc1 assets remain a fixed release snapshot;
-later documentation changes on main do not replace its archives. RepoLens was not implemented.
+later changes on main do not replace its archives. See [Unreleased changes](../CHANGELOG.md) for subsequent fixes
+and the Actions badge for current main checks. Native acceptance reports cover the initial candidate's tested scope.

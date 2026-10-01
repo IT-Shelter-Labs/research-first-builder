@@ -13,8 +13,11 @@ A real desktop Bookmarks task also completed by explicit skill-file invocation. 
 and postbuild were independently reviewed; all 55 HTTP assertions passed again in an isolated copy.
 [Acceptance details](acceptance/DESKTOP_BOOKMARKS.md) distinguish recorded browser checks from independent repetition.
 
-Local validation: 54 tests passed; one Windows symlink-creation case skipped by host permissions. Format/lint and
-clean-archive checks passed. The helper needs no pip dependencies, backend, RFB account or MCP server.
+Validation of the published rc1 snapshot: the helper suite contained **38 tests: 37 passed and one Windows
+symlink-creation case was skipped by host permissions**. The three example suites added **17 passing behavior
+tests** (5 team-chat, 6 webhook-inbox, 6 local-cli), for **54 passed and one skipped in total**. This excludes
+the separate 55-assertion desktop acceptance run. Format/lint and clean-archive checks passed. Current main
+may contain additional regression tests. The helper needs no pip dependencies, backend, RFB account or MCP server.
 
 **Pre-release limitations:** full native primary-host acceptance remains incomplete; Cursor/OpenCode have
 format/install beta status. Comparative evaluation/pilot results are not available. Review current hosted Actions

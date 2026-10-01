@@ -85,6 +85,50 @@ class PackagingTests(unittest.TestCase):
             self.assertEqual(cli("init", run)[0], 1)
             self.assertEqual((run / "RESEARCH.md").read_text(), "User's existing research")
 
+    def test_fresh_starter_is_actionable_without_mutating_artifacts(self):
+        from support import cli, rfb
+
+        with tempfile.TemporaryDirectory() as temp:
+            run = Path(temp) / "new-task"
+            self.assertEqual(cli("init", run)[0], 0)
+            before = {p.name: p.read_bytes() for p in run.iterdir() if p.is_file()}
+            for args in (("render", run), ("check", run, "--stage", "prebuild", "--json")):
+                status, output = cli(*args)
+                self.assertEqual(status, 1)
+                self.assertIn("fill evidence.json first", output)
+                self.assertNotIn("must not be blank", output)
+            result = json.loads(output)
+            self.assertEqual(result["status"], "FAIL")
+            self.assertEqual(len(result["errors"]), 1)
+            process = subprocess.run(
+                [sys.executable, str(SKILL / "scripts" / "rfb.py"), "render", str(run)],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+            )
+            self.assertEqual(process.returncode, 1)
+            self.assertIn("fill evidence.json first", process.stderr)
+            self.assertEqual(before, {p.name: p.read_bytes() for p in run.iterdir() if p.is_file()})
+            data = rfb.load_json(run / "evidence.json")
+            data["scope"]["goal"] = "Partially filled research"
+            (run / "evidence.json").write_text(json.dumps(data))
+            status, output = cli("render", run)
+            self.assertEqual(status, 1)
+            self.assertNotIn("still a template", output)
+            self.assertIn("must not be blank", output)
+
+    def test_non_object_ledger_fails_without_traceback(self):
+        from support import cli
+
+        with tempfile.TemporaryDirectory() as temp:
+            run = Path(temp)
+            (run / "evidence.json").write_text("[]")
+            for command in ("render", "check"):
+                status, output = cli(command, run)
+                self.assertEqual(status, 1)
+                self.assertIn("JSON object", output)
+                self.assertNotIn("Traceback", output)
+
 
 if __name__ == "__main__":
     unittest.main()
