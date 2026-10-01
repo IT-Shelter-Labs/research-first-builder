@@ -18,6 +18,17 @@ Don't build from vibes. Build from evidence.
 
 ## Установка в приложение
 
+Из папки целевого проекта, если установлен Node **22.20+**:
+
+```text
+npx skills@1.7.0 add IT-Shelter-Labs/research-first-builder --skill research-first-build --agent codex --copy
+```
+
+Установка из GitHub проверена в чистом проекте без авторизации Git. Она не подтверждает полный запуск
+модели во всех агентах; [точный статус](docs/COMPATIBILITY.md) указан отдельно.
+Для установки копированием скачайте [архив скилла из релиза](https://github.com/IT-Shelter-Labs/research-first-builder/releases/tag/v0.1.0-rc1)
+или используйте локальную копию репозитория.
+
 Скопируйте всю папку `skills/research-first-build` в проект, с которым работает агент:
 
 - Codex в приложении: `.agents/skills/research-first-build`.

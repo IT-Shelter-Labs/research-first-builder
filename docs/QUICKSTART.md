@@ -7,7 +7,14 @@ references, assets and scripts; copying just SKILL.md breaks progressive resourc
 Keep your existing skills/configuration. Install once in a fresh target project or inspect any existing same-name
 installation before updating it. No global hooks, MCP configuration or permission overrides are needed.
 
-Local installer option, from the target project:
+Install from GitHub, from the target project:
+
+```text
+npx skills@1.7.0 add IT-Shelter-Labs/research-first-builder --skill research-first-build --agent codex --copy
+```
+
+This route was checked in a clean project without Git credentials on 2026-10-01. All 13 distribution files
+matched the source skill and the isolated helper init passed. For a local checkout instead:
 
 ```text
 npx skills@1.7.0 add "<local-checkout>" --skill research-first-build --agent codex --copy

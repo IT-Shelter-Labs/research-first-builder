@@ -12,7 +12,7 @@ use a trusted local workspace. Do not accept another author's receipts without r
 Examples are bounded educational code, not audited production security components. The webhook example's
 test key is intentionally public and must not be deployed. Do not place credentials or sensitive payloads in shared logs.
 
-Before publication, use the owning organization's established private contact for sensitive reports. After GitHub
-private vulnerability reporting is enabled, use the repository Security tab. No dedicated mailbox or active private
-reporting service is claimed by this local candidate. Public issues are suitable for non-sensitive reproducible defects;
+Private vulnerability reporting is enabled on GitHub, verified 2026-10-01. For sensitive reports, use
+[Report a vulnerability](https://github.com/IT-Shelter-Labs/research-first-builder/security/advisories/new)
+in the repository Security tab. Public issues are suitable for non-sensitive reproducible defects;
 never include tokens, private source or exploit details that expose an existing system.

@@ -23,9 +23,11 @@ change global permissions or replace user configuration to force a pass.
 - Three genuine-source, maintainer-authored educational implementations: actual behavior tests and current postbuild checks.
 - One independent research-only agent run and a real negative postbuild test; no application was written in that run.
 - One real desktop full task with primary analogue research, prebuild before app code, implementation and actual checks. [Acceptance report and limits](acceptance/DESKTOP_BOOKMARKS.md).
+- Public GitHub install using skills 1.7.0 in a clean project with Git credential helpers disabled: 13 distribution files byte-matched and isolated helper init passed. This is installation acceptance, not native model execution.
 
-See [evaluation observations](../evals/README.md) and linked example receipts. Hosted Windows/Linux CI is
-configured; hosted run results have not yet been inspected. Cross-host availability depends on the host's model,
+See [evaluation observations](../evals/README.md) and linked example receipts. Hosted Windows/Linux CI and lint
+[passed on 60977ec](https://github.com/IT-Shelter-Labs/research-first-builder/actions/runs/36797869484), inspected 2026-10-01.
+Cross-host availability depends on the host's model,
 file-tool and source-access settings; installation success alone cannot prove those capabilities.
 
 ## Native acceptance to complete

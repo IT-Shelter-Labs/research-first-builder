@@ -1,5 +1,7 @@
 # Research First Builder
 
+[![Offline checks](https://github.com/IT-Shelter-Labs/research-first-builder/actions/workflows/check.yml/badge.svg?branch=main)](https://github.com/IT-Shelter-Labs/research-first-builder/actions/workflows/check.yml)
+
 **Make your coding agent justify architecture with real sources before it builds.**
 
 Don't build from vibes. Build from evidence.
@@ -43,6 +45,17 @@ Other examples cover a [signed webhook inbox](examples/webhook-inbox/RESEARCH.md
 
 ## Install
 
+From your target project, with Node **22.20+**:
+
+```text
+npx skills@1.7.0 add IT-Shelter-Labs/research-first-builder --skill research-first-build --agent codex --copy
+```
+
+This GitHub route was tested in a clean project without Git credentials. Installation does not establish
+native model compatibility; see the [actual host status](docs/COMPATIBILITY.md). For a folder copy,
+download the [skill archive](https://github.com/IT-Shelter-Labs/research-first-builder/releases/tag/v0.1.0-rc1)
+or use a checkout as described below.
+
 Download/extract this package, or use your local checkout. Copy the **whole**
 `skills/research-first-build` folder into your target project's skill directory:
 
@@ -57,7 +70,7 @@ For desktop Codex, this is a folder copy in your coding project; **the separate 
 Open that project and select/invoke the skill. If it does not appear, restart the coding session/application.
 Ordinary chat without local file/research tools cannot execute this workflow.
 
-Alternatively, from your target project, install from a local checkout with Node **22.20+**:
+For a local checkout, use:
 
 ```text
 npx skills@1.7.0 add "<path-to-research-first-builder>" --skill research-first-build --agent codex --copy
